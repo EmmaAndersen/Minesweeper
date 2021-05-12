@@ -51,10 +51,10 @@ public class Node {
 
     public NodeContains nodeContains = NodeContains.EMPTY;
 
-    private final int posX;
-    private final int posY;
-    private boolean isHidden = true;
-    private boolean isFlagged = false;
+    public final int posX;
+    public final int posY;
+    public boolean isHidden = true;
+    public boolean isFlagged = false;
 
     public Node(int posX, int posY) {
         this.posX = posX;

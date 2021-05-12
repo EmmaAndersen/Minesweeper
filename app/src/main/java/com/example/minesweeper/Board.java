@@ -1,5 +1,7 @@
 package com.example.minesweeper;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -18,9 +20,12 @@ public class Board {
 
     public Node[] nodes;
     private Node[] bombNodes;
+    //Size of the game board
     private final int gridX;
     private final int gridY;
+    //amount of bombs on the game board
     private final int bombCount;
+    //used to randomize location of bombs on the game board
     private Random random;
 
     public Board(int countX, int countY, int countBomb) {
@@ -129,7 +134,7 @@ public class Board {
     private LinkedHashMap<Integer, Boolean> PruneConnections(LinkedHashMap<Integer, Boolean> keyValuePairs, int currentNode) {
         Stack<Integer> stack = new Stack();
 
-        //TODO Replace LinkedHashMap with something that allows the use of: GetElementAt(index);
+        //TODO Replace LinkedHashMap with something that allows the use of: GetElementAt(index);, Check out Custom Vector class
 
         //get iterator for collection
         for (java.util.Map.Entry<Integer, Boolean> integerBooleanEntry : keyValuePairs.entrySet()) {
@@ -140,7 +145,7 @@ public class Board {
             int evalKey = stack.pop();
             if (!keyValuePairs.get(evalKey))//cleans LinkedHashMap of invalid connections
             {
-                keyValuePairs.remove(keyValuePairs.get(evalKey));
+                keyValuePairs.remove(evalKey);
             }
         }
         nodes[currentNode].InitializeNodesConnectionArray(keyValuePairs.size());//initialise the size for the Edge array in the current node
@@ -155,7 +160,6 @@ public class Board {
      */
     private void SetConnections(LinkedHashMap<Integer, Boolean> keyValuePairs, int currentNode) {
         //TODO Replace LinkedHashMap with something that allows the use of: GetElementAt(index);
-
         Iterator<LinkedHashMap.Entry<Integer, Boolean>> iterator = keyValuePairs.entrySet().iterator();//get iterator for collection
         int edgeIterator = 0;
         while (iterator.hasNext()) {
@@ -170,13 +174,14 @@ public class Board {
      * @since 2021-05-06
      */
     private void PopulateBombs() {
+        Log.d("size", String.valueOf(nodes.length));
         List<Integer> availableSquares = new ArrayList<Integer>(nodes.length);//initialise list of available nodes
         for (int i = 0; i < nodes.length; i++) //populates the list
         {
-            availableSquares.set(i, i);
+            availableSquares.add(i);
         }
 
-        for (int bombsLeft = bombCount; bombsLeft >= 0; bombsLeft--) {//randomises position of all the bombs in one pass
+        for (int bombsLeft = 0; bombsLeft < bombCount; bombsLeft++) {//randomises position of all the bombs in one pass
             int indexInAvailableSquares = random.nextInt(availableSquares.size());
             nodes[availableSquares.get(indexInAvailableSquares)].nodeContains = Node.NodeContains.BOMB;
             bombNodes[bombsLeft] = nodes[availableSquares.get(indexInAvailableSquares)]; //add node to list of bombs
