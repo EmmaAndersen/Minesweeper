@@ -34,7 +34,9 @@ public class GraphicsHandler extends View {
     int x = 10;
     int y = 10;
 
-        public GraphicsHandler(Context context, AttributeSet attributeSet)
+    private Node node;
+
+        public GraphicsHandler(Context context, AttributeSet attributeSet, Node node)
     {
         super(context,attributeSet);
         BOMBmap = BitmapFactory.decodeResource(getResources(),R.mipmap.bomb1);
@@ -51,7 +53,10 @@ public class GraphicsHandler extends View {
         FLAGmap = BitmapFactory.decodeResource(getResources(),R.mipmap.flag1);
         paint = new Paint();
         paint.setARGB(0,0,0,0);
+
+        this.node = node;
     }
+
 
     public void setBoard(Board board) {
         this.board = board;
@@ -59,9 +64,6 @@ public class GraphicsHandler extends View {
 
     public void updateNodeTexture(Node node, Canvas canvas)
     {
-
-
-
         //set graphic
         if(node.isFlagged)
         {
@@ -134,7 +136,8 @@ public class GraphicsHandler extends View {
         }
     }
 
-    protected void onDraw(Canvas canvas, Node node) {
+    @Override
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         updateNodeTexture(node,canvas);
         NodeTexturesUpdate(canvas,node);

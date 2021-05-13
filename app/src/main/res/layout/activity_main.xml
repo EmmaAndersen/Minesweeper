@@ -12,9 +12,11 @@
     tools:context=".MainActivity">
 
     <view
+        android:id="@+id/graphicsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        class="com.example.minesweeper.GraphicsHandler" android:id="@+id/graphicsView"/>
+        class= "com.example.minesweeper.GraphicsHandler"
+        />
 
 </LinearLayout>
 
