@@ -40,9 +40,18 @@ public class GraphicsHandler extends View {
     private ScaleGestureDetector scaleGestureDetector;
     private float scaleFactor = 1.0f;
 
-        public GraphicsHandler(Context context, AttributeSet attributeSet, Node node)
+    public GraphicsHandler(Context context, Node node){
+        super(context);
+        Initialize(context);
+    }
+
+    public GraphicsHandler(Context context, AttributeSet attributeSet)
     {
         super(context,attributeSet);
+        Initialize(context);
+    }
+
+    private void Initialize(Context context){
         BOMBmap = BitmapFactory.decodeResource(getResources(),R.mipmap.bomb1);
         EIGHTmap = BitmapFactory.decodeResource(getResources(),R.mipmap.eight1);
         SEVENmap = BitmapFactory.decodeResource(getResources(),R.mipmap.seven1);
@@ -59,7 +68,6 @@ public class GraphicsHandler extends View {
         paint.setARGB(0,0,0,0);
 
         this.node = node;
-
         scaleGestureDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
