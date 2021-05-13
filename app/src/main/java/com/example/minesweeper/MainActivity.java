@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         linearLayout =findViewById(R.id.mainView);
-        graphicsHandler = new GraphicsHandler(this,);
+        //graphicsHandler = new GraphicsHandler(this,);
         board = new Board(10,10,99);
     }
 }

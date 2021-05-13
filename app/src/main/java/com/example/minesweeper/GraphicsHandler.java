@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.DrawableRes;
@@ -136,5 +138,13 @@ public class GraphicsHandler extends View {
         super.onDraw(canvas);
         updateNodeTexture(node,canvas);
         NodeTexturesUpdate(canvas,node);
+
+        Log.d("graphics", "hej");
+
+        canvas.drawColor(Color.BLUE);
+        Paint p = new Paint();
+        p.setColor(Color.GREEN);
+        p.setStrokeWidth(20);
+        canvas.drawLine(20, 0, 20, canvas.getHeight(), p);
     }
 }

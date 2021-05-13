@@ -9,4 +9,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"/>
+    tools:context=".MainActivity">
+
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        class="com.example.minesweeper.GraphicsHandler" android:id="@+id/graphicsView"/>
+
+</LinearLayout>
+
