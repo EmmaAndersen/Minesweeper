@@ -1,5 +1,8 @@
 package com.example.minesweeper;
 
+import android.util.Log;
+import android.widget.ImageButton;
+
 /**
  * <h1>A specific position in the map, holds an array of connected Edges</h1>
  *
@@ -95,27 +98,37 @@ public class Node {
     /**
      * <h1>Reveals the selected node</h1>
      * Reveals connected nodes if selected node is empty.
+     * Requests graphical updates from the GraphicsHandler
      *
      * @return boolean This returns true if we revealed a mine, GAME OVER.
      * @author Erik Broman
      * @since 2021-05-06
      */
-    public boolean RevealNode()//1 is dead
+    public boolean RevealNode(ImageButton button, ViewRequest viewRequest)//1 is dead
     {
+        //we don't allow clicks to reveal flagged nodes
         if (isFlagged)
             return false;
 
-        isHidden = false;
+        //reveal the node
+        isHidden = false; //TODO check if actually used don't think it is
 
-        //TODO CALL GRAPHICS HANDLER TO UPDATE THE GRAPHICS
-
-        if (nodeContains == NodeContains.BOMB)
+        //reveal the bomb and returns that the user has lost
+        if (nodeContains == NodeContains.BOMB) {
+            GraphicsHandler.RevealNodeTextureUpdate(button, this);
             return true;
+        }
 
+        //Reveal this node and all adjacent nodes, disables the click function of the button
         if (nodeContains == NodeContains.EMPTY)
             for (Edge edge : edges) {
-                edge.toNode.RevealNode();
+                if (button.isClickable()) {
+                    Log.d("ID of button", String.valueOf((ImageButton) viewRequest.requestViewByID(edge.toNode.posX * edge.toNode.posY)));
+                    button.setClickable(false);
+                    edge.toNode.RevealNode((ImageButton) viewRequest.requestViewByID(edge.toNode.posX * edge.toNode.posY), viewRequest);
+                }
             }
+        GraphicsHandler.RevealNodeTextureUpdate(button, this);
         return false;
     }
 }

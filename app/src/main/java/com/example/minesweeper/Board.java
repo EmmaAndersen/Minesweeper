@@ -21,12 +21,12 @@ public class Board {
     public Node[] nodes;
     private Node[] bombNodes;
     //Size of the game board
-    private final int gridX;
-    private final int gridY;
+    public final int gridX;
+    public final int gridY;
     //amount of bombs on the game board
     private final int bombCount;
     //used to randomize location of bombs on the game board
-    private Random random;
+    private final Random random;
 
     public Board(int countX, int countY, int countBomb) {
         gridX = countX;
@@ -143,6 +143,7 @@ public class Board {
 
         while (!stack.empty()) {
             int evalKey = stack.pop();
+            //noinspection ConstantConditions
             if (!keyValuePairs.get(evalKey))//cleans LinkedHashMap of invalid connections
             {
                 keyValuePairs.remove(evalKey);
@@ -175,7 +176,7 @@ public class Board {
      */
     private void PopulateBombs() {
         Log.d("size", String.valueOf(nodes.length));
-        List<Integer> availableSquares = new ArrayList<Integer>(nodes.length);//initialise list of available nodes
+        List<Integer> availableSquares = new ArrayList<>(nodes.length);//initialise list of available nodes
         for (int i = 0; i < nodes.length; i++) //populates the list
         {
             availableSquares.add(i);
