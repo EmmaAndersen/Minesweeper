@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 
 import androidx.annotation.DrawableRes;
@@ -36,6 +37,9 @@ public class GraphicsHandler extends View {
 
     private Node node;
 
+    private ScaleGestureDetector scaleGestureDetector;
+    private float scaleFactor = 1.0f;
+
         public GraphicsHandler(Context context, AttributeSet attributeSet, Node node)
     {
         super(context,attributeSet);
@@ -55,8 +59,22 @@ public class GraphicsHandler extends View {
         paint.setARGB(0,0,0,0);
 
         this.node = node;
+
+        scaleGestureDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener{
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaleFactor *= detector.getScaleFactor();
+
+            //preventing the object to get too large or too small.
+            scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 5.0f));
+
+            invalidate();
+            return true;
+        }
+    }
 
     public void setBoard(Board board) {
         this.board = board;
