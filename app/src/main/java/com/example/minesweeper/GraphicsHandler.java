@@ -40,7 +40,7 @@ public class GraphicsHandler extends View {
     private ScaleGestureDetector scaleGestureDetector;
     private float scaleFactor = 1.0f;
 
-    public GraphicsHandler(Context context, Node node){
+    public GraphicsHandler(Context context){
         super(context);
         Initialize(context);
     }

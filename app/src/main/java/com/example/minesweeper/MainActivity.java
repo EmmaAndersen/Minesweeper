@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     GraphicsHandler graphicsHandler;
     Board board;
+    private Node node;
     private LinearLayout linearLayout;
 
     @Override
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         linearLayout =findViewById(R.id.mainView);
-        //graphicsHandler = new GraphicsHandler(this,);
+        graphicsHandler = new GraphicsHandler(this);   //Call to new constructor
         board = new Board(10,10,99);
     }
 
