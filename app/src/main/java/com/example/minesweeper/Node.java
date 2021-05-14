@@ -3,6 +3,8 @@ package com.example.minesweeper;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import java.util.List;
+
 /**
  * <h1>A specific position in the map, holds an array of connected Edges</h1>
  *
@@ -104,8 +106,9 @@ public class Node {
      * @author Erik Broman
      * @since 2021-05-06
      */
-    public boolean RevealNode(ImageButton button, ViewRequest viewRequest)//1 is dead
+    public boolean RevealNode(ImageButton button, ViewRequest viewRequest, int sizeOfBoardX, int sizeOfBoardY)//1 is dead
     {
+        Log.d("IDofThisButton", String.valueOf(button.getId()));
         //we don't allow clicks to reveal flagged nodes
         if (isFlagged)
             return false;
@@ -120,15 +123,31 @@ public class Node {
         }
 
         //Reveal this node and all adjacent nodes, disables the click function of the button
-        if (nodeContains == NodeContains.EMPTY)
-            for (Edge edge : edges) {
-                if (button.isClickable()) {
-                    Log.d("ID of button", String.valueOf((ImageButton) viewRequest.requestViewByID(edge.toNode.posX * edge.toNode.posY)));
-                    button.setClickable(false);
-                    edge.toNode.RevealNode((ImageButton) viewRequest.requestViewByID(edge.toNode.posX * edge.toNode.posY), viewRequest);
+        if (nodeContains == NodeContains.EMPTY) {
+            if (button.isClickable()) {
+                ImageButton[] buttons = new ImageButton[edges.length];
+                Log.d("BREAK", String.valueOf("BREAK"));
+                for (int i = 0, edgesLength = edges.length; i < edgesLength; i++) {
+                    Edge edge = edges[i];
+
+                    buttons[i] = (ImageButton) viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY);
+                    Log.d("but I", String.valueOf(buttons[i].getId()));
+                    //edge.toNode.RevealNode((ImageButton) viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY), viewRequest, sizeOfBoardX, sizeOfBoardY);
+                }
+
+                button.setClickable(false);
+
+                for (int i = 0, buttonsLength = buttons.length; i < buttonsLength; i++) {
+                    RevealNode(buttons[i], viewRequest, sizeOfBoardX, sizeOfBoardY);
                 }
             }
         GraphicsHandler.RevealNodeTextureUpdate(button, this);
+        }
         return false;
     }
 }
+
+//   Log.d("edgeCount", String.valueOf(edges.length));
+//           Log.d("IDoftoNode", String.valueOf(viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY).getId()));
+//             Log.d("Equation", String.valueOf(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY));
+//        Log.d("posx,posy", String.valueOf(edge.toNode.posX + " , " + edge.toNode.posY));

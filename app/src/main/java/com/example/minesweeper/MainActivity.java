@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        board = new Board(4,4,1);
+        board = new Board(4,4,3);
         GameActivity gameActivity = new GameActivity();
         populateNodeList();
     }
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(node.RevealNode(button,viewRequest))
+                    if(node.RevealNode(button,viewRequest,board.gridX,board.gridY))
                     {
                         Log.d("GameOver","GameOver");//Game OVER
                     }
