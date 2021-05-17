@@ -47,19 +47,19 @@ public class PlayFragment extends Fragment
     private  void buttonListener()
     {
         easyButton = view.findViewById(R.id.easy_button);
-        easyButton.setOnClickListener(buttonListener);
+        easyButton.setOnClickListener(buttonListenerEasy);
 
         intermediateButton = view.findViewById(R.id.intermediate_button);
-        intermediateButton.setOnClickListener(buttonListener);
+        intermediateButton.setOnClickListener(buttonListenerIntermediate);
 
         hardButton = view.findViewById(R.id.hard_button);
-        hardButton.setOnClickListener(buttonListener);
+        hardButton.setOnClickListener(buttonListenerHard);
 
         customButton = view.findViewById(R.id.cusom_button);
-        customButton.setOnClickListener(buttonListener);
+        customButton.setOnClickListener(buttonListenerCustom);
 
         backButton = view.findViewById(R.id.back_button);
-        backButton.setOnClickListener(buttonListener);
+        backButton.setOnClickListener(buttonListenerBack);
     }
 
     /**
@@ -68,29 +68,51 @@ public class PlayFragment extends Fragment
      * @author Jenny Johannesson
      * @since 2021-05-13
      */
-    private View.OnClickListener buttonListener = new View.OnClickListener(){
+    private View.OnClickListener buttonListenerEasy = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             CharSequence  easy = "You chose the easymode";
-            CharSequence  intermidate = "You chose the intermidatemode";
-            CharSequence  hard = "You chose the hardmode";
-            CharSequence  custom = "You chose the custommode";
-            if(v.equals(easyButton)){
+
                 Toast.makeText(getActivity().getApplicationContext(), easy, Toast.LENGTH_SHORT).show();
-            }
-            else if(v.equals(intermediateButton)){
+        }
+
+    };
+    private View.OnClickListener buttonListenerIntermediate = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+
+            CharSequence  intermidate = "You chose the intermidatemode";
+
                 Toast.makeText(getActivity().getApplicationContext(), intermidate, Toast.LENGTH_SHORT).show();
-            }
-            else if(v.equals(hardButton)){
+        }
+
+    };
+    private View.OnClickListener buttonListenerHard = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+
+            CharSequence  hard = "You chose the hardmode";
+
                 Toast.makeText(getActivity().getApplicationContext(), hard, Toast.LENGTH_SHORT).show();
-            }
-            else if(v.equals(customButton)){
-                Toast.makeText(getActivity().getApplicationContext(), custom, Toast.LENGTH_SHORT).show();
-            }
-            else if(v.equals(backButton)){
-                //Toast.makeText(getActivity().getApplicationContext(), custom, Toast.LENGTH_SHORT).show();
+        }
+
+    };
+    private View.OnClickListener buttonListenerBack = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().startFragment, null ).commit();
-            }
+        }
+
+    };
+
+    private View.OnClickListener buttonListenerCustom = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+
+            CharSequence  custom = "You chose the custommode";
+
+                Toast.makeText(getActivity().getApplicationContext(), custom, Toast.LENGTH_SHORT).show();
         }
 
     };

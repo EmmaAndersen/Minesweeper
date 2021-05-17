@@ -1,6 +1,5 @@
 package com.example.minesweeper.startScreen;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +8,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.minesweeper.MainActivity;
 import com.example.minesweeper.R;
@@ -50,16 +46,16 @@ public class StartFragment extends Fragment
     private void buttonListener()
     {
         startButton = view.findViewById(R.id.start_button);
-        startButton.setOnClickListener(buttonListener);
+        startButton.setOnClickListener(buttonListenerStart);
 
         creditButton = view.findViewById(R.id.credit_Button);
-        creditButton.setOnClickListener(buttonListener);
+        creditButton.setOnClickListener(buttonListenerCredit);
 
-        quitButton = view.findViewById(R.id.credit_button);
-        quitButton.setOnClickListener(buttonListener);
+        quitButton = view.findViewById(R.id.quit_button);
+        quitButton.setOnClickListener(buttonListenerQuit);
 
         highscoreButton = view.findViewById(R.id.highscore_button);
-        highscoreButton.setOnClickListener(buttonListener);
+        highscoreButton.setOnClickListener(buttonListenerHighscore);
     }
 
     /**
@@ -68,27 +64,41 @@ public class StartFragment extends Fragment
      * @author Jenny Johannesson
      * @since 2021-05-13
      */
-    private View.OnClickListener buttonListener = new View.OnClickListener(){
+    private View.OnClickListener buttonListenerStart = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().playFragment, null ).commit();
+        }
+
+    };
+
+    private View.OnClickListener buttonListenerCredit = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().creditFragment, null ).commit();
+
+        }
+
+    };
+    private View.OnClickListener buttonListenerHighscore = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+
+                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment, null ).commit();
+
+        }
+
+    };
+    private View.OnClickListener buttonListenerQuit = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             CharSequence quit = "You pressed quit";
-            if(v.equals(startButton)){
-                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().playFragment, null ).commit();
 
-            }
-            else if(v.equals(creditButton)){
-                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().creditFragment, null ).commit();
-
-            }
-            else  if(v.equals(highscoreButton)){
-                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment, null ).commit();
-            }
-            else if(v.equals(quitButton)){
-               // Activity.finish();
+                // Activity.finish();
                 //System.exit(0);
                 Toast.makeText(getActivity().getApplicationContext(), quit, Toast.LENGTH_SHORT).show();
-                //MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().startFragment, null ).commit();
-            }
+
         }
 
     };
