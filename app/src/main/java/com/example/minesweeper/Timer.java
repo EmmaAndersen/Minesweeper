@@ -17,6 +17,8 @@ public class Timer extends AppCompatActivity {
     private Chronometer chronometer;
     private long pauseOffset;  //To calculate the time difference from when we started the chronometer and until it is paused.
 
+    String timerValue;  //not used yet, thinking of using this as the variable to store the time in the database (for high score)
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
