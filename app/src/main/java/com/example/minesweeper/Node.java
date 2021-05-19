@@ -3,6 +3,9 @@ package com.example.minesweeper;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 /**
@@ -13,6 +16,12 @@ import java.util.List;
  * @since 2021-05-06
  */
 public class Node {
+
+    private FirebaseDatabase fireBaseRootNode;
+    private DatabaseReference databaseReference;
+
+    Timer timer;
+
     public Edge[] edges;
 
     /**
@@ -64,6 +73,7 @@ public class Node {
     public Node(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
+        timer = new Timer();
     }
 
     /**
@@ -119,6 +129,11 @@ public class Node {
         //reveal the bomb and returns that the user has lost
         if (nodeContains == NodeContains.BOMB) {
             GraphicsHandler.RevealNodeTextureUpdate(button, this);
+            fireBaseRootNode = FirebaseDatabase.getInstance();
+            databaseReference = fireBaseRootNode.getReference("easy");
+
+            //databaseReference.setValue(timer.getTime());
+            Log.d("timeValue", String.valueOf(timer.getTime()));
             return true;
         }
 

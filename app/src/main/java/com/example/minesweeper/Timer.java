@@ -16,6 +16,7 @@ public class Timer extends AppCompatActivity {
     boolean timerIsRunning;
     private Chronometer chronometer;
     private long pauseOffset;  //To calculate the time difference from when we started the chronometer and until it is paused.
+    public int time;
 
     String timerValue;  //not used yet, thinking of using this as the variable to store the time in the database (for high score)
 
@@ -25,6 +26,11 @@ public class Timer extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         chronometer = findViewById(R.id.chronometerID);
+    }
+
+    public int getTime(){
+        time = (int)chronometer.getBase();
+        return time;
     }
 
     //Call the following methods with the co-responding buttons' onClick methods.
