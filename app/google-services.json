@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "128999004974",
+    "firebase_url": "https://minesweep-73ac4-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "minesweep-73ac4",
+    "storage_bucket": "minesweep-73ac4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128999004974:android:5210de396c48271546b8bf",
+        "android_client_info": {
+          "package_name": "com.example.minesweeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128999004974-v6tqngfl8fnv8qt1s2cfukqglgt268af.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq3zJOEWZCkeOEpgy3QCDEy2I7s6B8lfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128999004974-v6tqngfl8fnv8qt1s2cfukqglgt268af.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
