@@ -6,8 +6,10 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +26,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Minesweeper);
         fragmentManager =  getSupportFragmentManager();
         setContentView(R.layout.activity_main);
+
+
         if(findViewById(R.id.container) != null) {
             if (savedInstanceState != null)
                 return;

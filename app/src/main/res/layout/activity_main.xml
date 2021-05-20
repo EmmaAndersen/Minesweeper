@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context=".MainActivity"
+    android:background="@drawable/ic_splash_minesweeper"
    >
 
 
