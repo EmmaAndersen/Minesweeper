@@ -7,6 +7,7 @@ import android.view.accessibility.AccessibilityRecord;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.minesweeper.GameActivity;
 import com.example.minesweeper.R;
 
 /**
@@ -22,6 +23,7 @@ public  class MenuManager {
     public HighscoreFragment highscoreFragment;
     public CreditFragment creditFragment;
     public PlayFragment playFragment;
+
 
     /**
      * <h1>A singleton for the class</h1>
@@ -42,6 +44,7 @@ public  class MenuManager {
         highscoreFragment = new HighscoreFragment();
         creditFragment = new CreditFragment();
         playFragment = new PlayFragment();
+
     }
 
 }

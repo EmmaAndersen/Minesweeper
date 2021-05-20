@@ -129,11 +129,11 @@ public class Node {
         //reveal the bomb and returns that the user has lost
         if (nodeContains == NodeContains.BOMB) {
             GraphicsHandler.RevealNodeTextureUpdate(button, this);
-            fireBaseRootNode = FirebaseDatabase.getInstance();
+           /* fireBaseRootNode = FirebaseDatabase.getInstance();
             databaseReference = fireBaseRootNode.getReference("easy");
 
             //databaseReference.setValue(timer.getTime());
-            Log.d("timeValue", String.valueOf(timer.getTime()));
+            Log.d("timeValue", String.valueOf(timer.getTime()));*/
             return true;
         }
 

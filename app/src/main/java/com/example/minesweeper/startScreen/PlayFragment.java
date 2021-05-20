@@ -1,7 +1,9 @@
 package com.example.minesweeper.startScreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,11 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.minesweeper.GameActivity;
 import com.example.minesweeper.MainActivity;
 import com.example.minesweeper.R;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <h1>The Startfragment .</h1>
@@ -28,6 +33,7 @@ public class PlayFragment extends Fragment
     Button backButton;
     private View view;
 
+
     public PlayFragment(){}
 
     @Override
@@ -36,6 +42,7 @@ public class PlayFragment extends Fragment
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.play_screen, container, false);
         buttonListener();
+
         return view;
     }
     /**
@@ -72,8 +79,18 @@ public class PlayFragment extends Fragment
         @Override
         public void onClick(View v) {
             CharSequence  easy = "You chose the easymode";
+         Intent intent = new Intent(getActivity(),GameActivity.class);
 
-                Toast.makeText(getActivity().getApplicationContext(), easy, Toast.LENGTH_SHORT).show();
+            if(intent != null)
+            {
+                //v.getContext().startActivity(intent);
+               startActivity(intent);
+                Log.d("HEJSAN" , String.valueOf(getActivity()));
+
+            }
+            //MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment , null ).commit();
+
+               //Toast.makeText(getActivity().getApplicationContext(), easy, Toast.LENGTH_SHORT).show();
         }
 
     };

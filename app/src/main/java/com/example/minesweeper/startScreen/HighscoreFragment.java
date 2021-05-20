@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.minesweeper.GameActivity;
 import com.example.minesweeper.MainActivity;
 import com.example.minesweeper.R;
 
@@ -30,8 +31,11 @@ public class HighscoreFragment extends Fragment
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.highscore_screen, container, false);
         buttonListener();
+
         return view;
     }
+
+
 
     private  void buttonListener(){
         backButton = view.findViewById(R.id.back_button);
