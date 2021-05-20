@@ -6,35 +6,29 @@
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/start_titleTV"
+    <Button
+        android:id="@+id/highscore_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="129dp"
-        android:layout_marginTop="97dp"
-        android:text="@string/start_title"
-        android:textColor="#1D0843"
-        android:textSize="25sp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/button_design"
+        android:gravity="center"
+        android:text="@string/highscore_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.418"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/start_button" />
 
     <Button
         android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="172dp"
+        android:background="@drawable/button_design"
+        android:gravity="center"
         android:text="@string/start_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/credit_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="456dp"
-        android:text="@string/credit_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,20 +36,38 @@
         android:id="@+id/quit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/button_design"
+        android:gravity="center"
         android:text="@string/quit_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/credit_Button" />
 
     <Button
-        android:id="@+id/highscore_button"
+        android:id="@+id/credit_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="145dp"
-        android:layout_marginTop="373dp"
-        android:text="@string/highscore_button"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_design"
+        android:gravity="center"
+        android:text="@string/credit_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.427"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/highscore_button" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="329dp"
+        android:layout_height="172dp"
+        app:layout_constraintBottom_toTopOf="@+id/start_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.401"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.554"
+        app:srcCompat="@drawable/minesweeper" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
