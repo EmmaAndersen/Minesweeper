@@ -22,6 +22,11 @@ public class HighscoreFragment extends Fragment
 {
     private View view;
     private Button backButton;
+    private RecyclerView recyclereasy;
+    private FirebaseDatabase fireBaseRootNode;
+    private DatabaseReference databaseReference;
+    private List<String> name;
+    private List<String> score;
 
     public HighscoreFragment(){}
 
@@ -32,8 +37,66 @@ public class HighscoreFragment extends Fragment
         view = inflater.inflate(R.layout.highscore_screen, container, false);
         buttonListener();
 
+        List<String> name=new ArrayList<String>();
+        List<String> score=new ArrayList<String>();
+
+        //Not ready
+       // dataeasy();
+        /*recyclereasy=view.findViewById(R.id.recyclereasyrank);
+        AdapterRanking adapter = new AdapterRanking(name,score);
+        recyclereasy.setAdapter(adapter);
+        recyclereasy.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclereasy.setItemAnimator(new DefaultItemAnimator());*/
+
+
+
+
         return view;
     }
+
+
+
+     //Not ready
+    public void dataeasy()
+    {
+
+        fireBaseRootNode= FirebaseDatabase.getInstance();
+        databaseReference = fireBaseRootNode.getReference("easy");//database.getReference("Numberofuser");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                try {
+                    JSONArray jsonArray=new JSONArray(value);
+                    for(int i=0;i<jsonArray.length();i++)
+                    {
+                        JSONObject user= jsonArray.getJSONObject(i);
+                        name.add("user"+i);
+                        score.add(user.getString("score"));
+
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.w("TAG", "Failed to read value.");
+                }
+                Log.d("TAG", "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
+
+
+    }
+
 
 
 
