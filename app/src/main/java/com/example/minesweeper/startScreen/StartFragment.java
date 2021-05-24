@@ -1,6 +1,8 @@
 package com.example.minesweeper.startScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.minesweeper.GameActivity;
+import com.example.minesweeper.HighScoreActivity;
 import com.example.minesweeper.MainActivity;
 import com.example.minesweeper.R;
 
@@ -85,7 +89,16 @@ public class StartFragment extends Fragment
         @Override
         public void onClick(View v) {
 
-                MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment, null ).commit();
+         Intent intent = new Intent(getActivity(), HighScoreActivity.class);
+
+            if(intent != null)
+            {
+                //v.getContext().startActivity(intent);
+                startActivity(intent);
+                Log.d("HEJSAN" , String.valueOf(getActivity()));
+
+            }
+               // MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment, null ).commit();
 
         }
 

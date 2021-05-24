@@ -6,11 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.minesweeper.Easy_fragment;
 import com.example.minesweeper.GameActivity;
+import com.example.minesweeper.Hard_fragment;
+import com.example.minesweeper.HighScoreActivity;
+import com.example.minesweeper.Intermediate_fragment;
 import com.example.minesweeper.MainActivity;
 import com.example.minesweeper.R;
+import com.example.minesweeper.ViewAdapter;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 
 /**
  * <h1>The highscore fragment.</h1>
@@ -22,16 +31,17 @@ public class HighscoreFragment extends Fragment
 {
     private View view;
     private Button backButton;
-
+   // HighScoreActivity activity;
     public HighscoreFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         //Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.highscore_screen, container, false);
-        buttonListener();
+        view = inflater.inflate(R.layout.highscore, container, false);
+       // activity = new HighScoreActivity();
 
+        //buttonListener();
         return view;
     }
 

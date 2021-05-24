@@ -21,14 +21,15 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayoutID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/tabBackground"
         app:tabGravity="fill"
-        app:tabMode="fixed"
-        android:id="@+id/tablayoutID"
-        app:tabTextColor="@color/tabTextColor"
         app:tabIndicatorColor="@color/tabIndicatorColor"
-        android:background="@color/tabBackground"/>
+        app:tabMode="fixed"
+        app:tabTextColor="@color/tabTextColor" />
+
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

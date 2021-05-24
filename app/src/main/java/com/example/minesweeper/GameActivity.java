@@ -114,18 +114,18 @@ public class GameActivity extends Activity {
             }
             //left side of this square is connected to the right side of the square to the right of this square
             else {
-                set.connect(button.getId(), ConstraintSet.LEFT, findViewById(i - 1).getId(), ConstraintSet.RIGHT);
+                set.connect(button.getId(), ConstraintSet.LEFT, findViewById(i - board.gridX).getId(), ConstraintSet.RIGHT);
             }
 
             // IT CRASHES HERE WTF SO WE COMMENTED OUT
             //top side of this square is connected to the bottom side of the constraint layout
-          /*  if (board.nodes[i].posY == 0) {
+           if (board.nodes[i].posY == 0) {
                 set.connect(button.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
             }
             //top side of this square is connected to the bottom side of the square above this square
             else {
-                set.connect(button.getId(), ConstraintSet.TOP, findViewById(i - board.gridY).getId(), ConstraintSet.BOTTOM);
-            }*/
+                set.connect(button.getId(), ConstraintSet.TOP, findViewById(i - 1).getId(), ConstraintSet.BOTTOM);
+            }
 
             //Updates the constraint layout with the constraints for the new button
             set.applyTo(constraintLayout);
