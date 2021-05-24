@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 public class GameActivity extends Activity {
     private Board board;
     ConstraintLayout constraintLayout;
+    private MediaPlayer mediaPlayer;
 
     ImageButton button;
 
@@ -96,6 +97,16 @@ public class GameActivity extends Activity {
                     if(node.RevealNode(button,viewRequest, board.gridX, board.gridY))
                     {
                         Log.d("GameOver","GameOver");//Game OVER
+
+                        //display the boom sound
+                      boomsound();
+                      //display the joke
+                        try {
+                            ConnectionAPI();
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
@@ -130,5 +141,73 @@ public class GameActivity extends Activity {
             //Updates the constraint layout with the constraints for the new button
             set.applyTo(constraintLayout);
         }
+    }
+
+
+    //function to display the boom sound
+        public void boomsound(){
+            if (mediaPlayer == null) {
+                mediaPlayer = MediaPlayer.create(this, R.raw.boom);
+            }
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+
+                }
+            });
+            mediaPlayer.start();
+
+        }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mediaPlayer.release();
+        mediaPlayer = null;
+    }
+
+
+    //function to obtain the joke
+    public void ConnectionAPI() throws IOException {
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://dad-jokes.p.rapidapi.com/random/joke";//"https://reqres.in/api/users?page=2";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("x-rapidapi-key", "598a6219d8msh7db487f981018bdp1f92a5jsna6c74dc55e2d")
+                .addHeader("x-rapidapi-host", "dad-jokes.p.rapidapi.com")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                if (response.isSuccessful()) {
+                    final String myResponse = response.body().string();
+                    String rep = myResponse.substring(myResponse.indexOf("setup") + 8, myResponse.indexOf("punchline") - 3)
+                            + "\n" + myResponse.substring(myResponse.indexOf("punchline") + 12, myResponse.length() - 4);
+
+                            GameActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Toast.makeText(getApplicationContext(), rep,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            }
+        });
     }
 }
