@@ -19,6 +19,7 @@ public class Node {
 
     private FirebaseDatabase fireBaseRootNode;
     private DatabaseReference databaseReference;
+    int i;
 
     Timer timer;
 
@@ -134,6 +135,44 @@ public class Node {
 
             //databaseReference.setValue(timer.getTime());
             Log.d("timeValue", String.valueOf(timer.getTime()));*/
+
+             //We have to find where we want to put the timer before to add the time in the database
+            //for the moment it's auto. at 0
+                // Read from the database the number of user
+           fireBaseRootNode= FirebaseDatabase.getInstance();
+            databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String value = dataSnapshot.getValue(String.class);
+                    i = Integer.parseInt(value);
+                    Log.d("TAG", "Value is: " + value);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w("TAG", "Failed to read value.", error.toException());
+                }
+            });
+
+
+             //Enter the name of the player and is score
+             databaseReference  = fireBaseRootNode.getReference("easy/user"+i+"/score");//database.getReference("message/java/user"+i+"/score");
+             databaseReference.setValue("0");//""+timer.getTime());
+             //We add the new player to the total of player
+             databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
+             databaseReference.setValue(""+(i+1));
+
+            Log.d("timeValue", "0");//String.valueOf(timer.getTime()));
+
+
+
+
+
+
             return true;
         }
 
