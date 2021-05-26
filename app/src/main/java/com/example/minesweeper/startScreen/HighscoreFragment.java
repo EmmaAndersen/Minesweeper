@@ -34,7 +34,7 @@ public class HighscoreFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         //Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.highscore_screen, container, false);
+        view = inflater.inflate(R.layout.highscore, container, false);
        // buttonListener();
 
        // List<String> name=new ArrayList<String>();
