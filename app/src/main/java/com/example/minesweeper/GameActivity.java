@@ -30,14 +30,13 @@ public class GameActivity extends Activity {
     ConstraintLayout constraintLayout;
   //  private MediaPlayer mediaPlayer;
 
-   // ImageButton button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
         constraintLayout  = findViewById(R.id.boardView);
-        board = new Board(4,4,5);
+        board = new Board(4,4,1);
         populateNodeList();
 
     }
@@ -54,7 +53,7 @@ public class GameActivity extends Activity {
      * <h1>Creates ImageButtons and sets their attributes according to the created board </h1>
      *
      * @author Erik Broman
-     * @since 2021-05-13
+     * @since 2021-05-13, Edited 2021-05-26
      */
     private void populateNodeList() {
 
@@ -92,13 +91,13 @@ public class GameActivity extends Activity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(node.RevealNode(button,viewRequest,board.gridX,board.gridY))
+                    if(node.RevealNode(button,viewRequest, board.gridY, node))
                     {
                         Log.d("GameOver","GameOver");//Game OVER
                     }
                 }
             });
-            //Log.d("BAJS", button.toString());
+
             //add the button to the constraintLayout
             constraintLayout.addView(button);
 
@@ -112,7 +111,7 @@ public class GameActivity extends Activity {
             }
             //left side of this square is connected to the right side of the square to the right of this square
             else {
-                set.connect(button.getId(), ConstraintSet.LEFT, findViewById(i - board.gridX).getId(), ConstraintSet.RIGHT);
+                set.connect(button.getId(), ConstraintSet.LEFT, findViewById(i - 1).getId(), ConstraintSet.RIGHT);
             }
 
             //top side of this square is connected to the bottom side of the constraint layout
@@ -121,7 +120,7 @@ public class GameActivity extends Activity {
             }
             //top side of this square is connected to the bottom side of the square above this square
             else {
-                set.connect(button.getId(), ConstraintSet.TOP, findViewById(i - 1).getId(), ConstraintSet.BOTTOM);
+                set.connect(button.getId(), ConstraintSet.TOP, findViewById(i - board.gridY).getId(), ConstraintSet.BOTTOM);
             }
 
             //Updates the constraint layout with the constraints for the new button

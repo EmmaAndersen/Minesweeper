@@ -43,13 +43,15 @@ public class Board {
      * <h1>Creates the Nodes that make up the game board.</h1>
      *
      * @author Erik Broman
-     * @since 2021-05-06
+     * @since 2021-05-06, Edited 2021-05-26
      */
     void PopulateBoard() {
         nodes = new Node[gridX * gridY];
         int counter = 0;
-        for (int x = 0; x < gridX; x++) {
-            for (int y = 0; y < gridY; y++) {
+
+        //builds the grid left to right, top to bottom
+        for (int y = 0; y < gridX; y++) {
+            for (int x = 0; x < gridY; x++) {
                 AddNewNodeToBoard(counter++, x, y);
             }
         }

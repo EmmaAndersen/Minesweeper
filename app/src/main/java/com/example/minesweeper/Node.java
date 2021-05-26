@@ -115,65 +115,75 @@ public class Node {
      *
      * @return boolean This returns true if we revealed a mine, GAME OVER.
      * @author Erik Broman
-     * @since 2021-05-06
+     * @since 2021-05-06, Edited 2021-05-26
      */
-    public boolean RevealNode(ImageButton button, ViewRequest viewRequest, int sizeOfBoardX, int sizeOfBoardY)//1 is dead
+    public boolean RevealNode(ImageButton button, ViewRequest viewRequest,  int sizeOfBoardY, Node currentNode)//1 is dead
     {
-        Log.d("IDofThisButton", String.valueOf(button.getId()));
+
         //we don't allow clicks to reveal flagged nodes
-        if (isFlagged)
+        if (currentNode.isFlagged)
             return false;
 
         //reveal the node
-        isHidden = false; //TODO check if actually used don't think it is
+        currentNode.isHidden = false; //TODO check if actually used don't think it is
 
-        //reveal the bomb and returns that the user has lost
-        if (nodeContains == NodeContains.BOMB) {
-            GraphicsHandler.RevealNodeTextureUpdate(button, this);
-           /* fireBaseRootNode = FirebaseDatabase.getInstance();
-            databaseReference = fireBaseRootNode.getReference("easy");
+        //disable the button, we only want buttons to be clickable once
+        button.setClickable(false);
 
-            //databaseReference.setValue(timer.getTime());
-            Log.d("timeValue", String.valueOf(timer.getTime()));*/
+        //change graphics of the button to what is hidden beneath
+        GraphicsHandler.RevealNodeTextureUpdate(button, currentNode);
 
-             //We have to find where we want to put the timer before to add the time in the database
-            //for the moment it's auto. at 0
-                // Read from the database the number of user
-        /*   fireBaseRootNode= FirebaseDatabase.getInstance();
+        //returns that the user has lost as the reveal node was a bomb
+        if (currentNode.nodeContains == NodeContains.BOMB) {
+          /* fireBaseRootNode = FirebaseDatabase.getInstance();
+           databaseReference = fireBaseRootNode.getReference("easy");
+
+           //databaseReference.setValue(timer.getTime());
+           Log.d("timeValue", String.valueOf(timer.getTime()));*/
+
+            //We have to find where we want to put the timer before to add the time in the database
+           //for the moment it's auto. at 0
+               // Read from the database the number of user
+       /*   fireBaseRootNode= FirebaseDatabase.getInstance();
+           databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
+           databaseReference.addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+                   // This method is called once with the initial value and again
+                   // whenever data at this location is updated.
+                   String value = dataSnapshot.getValue(String.class);
+                   i = Integer.parseInt(value);
+                   Log.d("TAG", "Value is: " + value);
+               }
+
+               @Override
+               public void onCancelled(DatabaseError error) {
+                   // Failed to read value
+                   Log.w("TAG", "Failed to read value.", error.toException());
+               }
+           });*/
+
+
+      /*      //Enter the name of the player and is score
+            databaseReference  = fireBaseRootNode.getReference("easy/user"+i+"/score");//database.getReference("message/java/user"+i+"/score");
+            databaseReference.setValue("0");//""+timer.getTime());
+            //We add the new player to the total of player
             databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    String value = dataSnapshot.getValue(String.class);
-                    i = Integer.parseInt(value);
-                    Log.d("TAG", "Value is: " + value);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                    Log.w("TAG", "Failed to read value.", error.toException());
-                }
-            });*/
-
-
-       /*      //Enter the name of the player and is score
-             databaseReference  = fireBaseRootNode.getReference("easy/user"+i+"/score");//database.getReference("message/java/user"+i+"/score");
-             databaseReference.setValue("0");//""+timer.getTime());
-             //We add the new player to the total of player
-             databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
-             databaseReference.setValue(""+(i+1));
+            databaseReference.setValue(""+(i+1));
 */
-            Log.d("timeValue", "0");//String.valueOf(timer.getTime()));
-
-
-
-
-
-
             return true;
+        }
+
+        //Reveal all adjacent nodes, as there are no bombs adjacent to this node
+        if(currentNode.nodeContains == NodeContains.EMPTY)
+        {
+            for (int i = 0; i < currentNode.edges.length; i++)
+            {
+                ImageButton temp =  (ImageButton) viewRequest.requestViewByID(currentNode.edges[i].toNode.posX + currentNode.edges[i].toNode.posY * sizeOfBoardY);
+                if(temp.isClickable()){
+                    RevealNode(temp, viewRequest, sizeOfBoardY,currentNode.edges[i].toNode);
+                }
+            }
         }
 
         button.setClickable(false);
@@ -181,8 +191,3 @@ public class Node {
         return false;
     }
 }
-
-//   Log.d("edgeCount", String.valueOf(edges.length));
-//           Log.d("IDoftoNode", String.valueOf(viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY).getId()));
-//             Log.d("Equation", String.valueOf(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY));
-//        Log.d("posx,posy", String.valueOf(edge.toNode.posX + " , " + edge.toNode.posY));
