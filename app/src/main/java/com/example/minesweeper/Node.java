@@ -104,50 +104,40 @@ public class Node {
      *
      * @return boolean This returns true if we revealed a mine, GAME OVER.
      * @author Erik Broman
-     * @since 2021-05-06
+     * @since 2021-05-06, Edited 2021-05-26
      */
-    public boolean RevealNode(ImageButton button, ViewRequest viewRequest, int sizeOfBoardX, int sizeOfBoardY)//1 is dead
+    public boolean RevealNode(ImageButton button, ViewRequest viewRequest, int sizeOfBoardX, int sizeOfBoardY, Node currentNode)//1 is dead
     {
-        Log.d("IDofThisButton", String.valueOf(button.getId()));
+
         //we don't allow clicks to reveal flagged nodes
-        if (isFlagged)
+        if (currentNode.isFlagged)
             return false;
 
         //reveal the node
-        isHidden = false; //TODO check if actually used don't think it is
+        currentNode.isHidden = false; //TODO check if actually used don't think it is
 
-        //reveal the bomb and returns that the user has lost
-        if (nodeContains == NodeContains.BOMB) {
-            GraphicsHandler.RevealNodeTextureUpdate(button, this);
+        //disable the button, we only want buttons to be clickable once
+        button.setClickable(false);
+
+        //change graphics of the button to what is hidden beneath
+        GraphicsHandler.RevealNodeTextureUpdate(button, currentNode);
+
+        //returns that the user has lost as the reveal node was a bomb
+        if (currentNode.nodeContains == NodeContains.BOMB) {
             return true;
         }
 
-        //Reveal this node and all adjacent nodes, disables the click function of the button
-        if (nodeContains == NodeContains.EMPTY) {
-            if (button.isClickable()) {
-                ImageButton[] buttons = new ImageButton[edges.length];
-                Log.d("BREAK", String.valueOf("BREAK"));
-                for (int i = 0, edgesLength = edges.length; i < edgesLength; i++) {
-                    Edge edge = edges[i];
-
-                    buttons[i] = (ImageButton) viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY);
-                    Log.d("but I", String.valueOf(buttons[i].getId()));
-                    //edge.toNode.RevealNode((ImageButton) viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY), viewRequest, sizeOfBoardX, sizeOfBoardY);
-                }
-
-                button.setClickable(false);
-
-                for (int i = 0, buttonsLength = buttons.length; i < buttonsLength; i++) {
-                    RevealNode(buttons[i], viewRequest, sizeOfBoardX, sizeOfBoardY);
+        //Reveal all adjacent nodes, as there are no bombs adjacent to this node
+        if(currentNode.nodeContains == NodeContains.EMPTY)
+        {
+            for (int i = 0; i < currentNode.edges.length; i++)
+            {
+                ImageButton temp =  (ImageButton) viewRequest.requestViewByID(currentNode.edges[i].toNode.posX + currentNode.edges[i].toNode.posY * sizeOfBoardY);
+                if(temp.isClickable()){
+                    RevealNode(temp, viewRequest, sizeOfBoardX, sizeOfBoardY,currentNode.edges[i].toNode);
                 }
             }
-        GraphicsHandler.RevealNodeTextureUpdate(button, this);
         }
         return false;
     }
 }
-
-//   Log.d("edgeCount", String.valueOf(edges.length));
-//           Log.d("IDoftoNode", String.valueOf(viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY).getId()));
-//             Log.d("Equation", String.valueOf(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY));
-//        Log.d("posx,posy", String.valueOf(edge.toNode.posX + " , " + edge.toNode.posY));

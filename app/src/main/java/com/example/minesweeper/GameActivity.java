@@ -38,7 +38,7 @@ public class GameActivity extends Activity {
      * <h1>Creates ImageButtons and sets their attributes according to the created board </h1>
      *
      * @author Erik Broman
-     * @since 2021-05-13
+     * @since 2021-05-13, Edited 2021-05-26
      */
     private void populateNodeList() {
 
@@ -78,7 +78,7 @@ public class GameActivity extends Activity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(node.RevealNode(button,viewRequest, board.gridX, board.gridY))
+                    if(node.RevealNode(button,viewRequest, board.gridX, board.gridY, node))
                     {
                         Log.d("GameOver","GameOver");//Game OVER
                     }
