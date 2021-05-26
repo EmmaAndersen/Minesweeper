@@ -28,7 +28,7 @@ public class HighScoreActivity extends AppCompatActivity {
         // Add fragments
         adapter.AddAFragment(new Easy_fragment(), "Easy");
         adapter.AddAFragment(new Intermediate_fragment(), "Intermediate");
-        adapter.AddAFragment(new Hard_fragment(), "hard");
+        adapter.AddAFragment(new Hard_fragment(), "Hard");
 
         //Adapter setup
         viewPager.setAdapter(adapter);
