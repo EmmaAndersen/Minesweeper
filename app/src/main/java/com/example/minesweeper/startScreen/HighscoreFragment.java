@@ -22,11 +22,11 @@ public class HighscoreFragment extends Fragment
 {
     private View view;
     private Button backButton;
-    private RecyclerView recyclereasy;
+  /*  private RecyclerView recyclereasy;
     private FirebaseDatabase fireBaseRootNode;
     private DatabaseReference databaseReference;
     private List<String> name;
-    private List<String> score;
+    private List<String> score;*/
 
     public HighscoreFragment(){}
 
@@ -35,10 +35,10 @@ public class HighscoreFragment extends Fragment
                              Bundle savedInstanceState){
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.highscore_screen, container, false);
-        buttonListener();
+       // buttonListener();
 
-        List<String> name=new ArrayList<String>();
-        List<String> score=new ArrayList<String>();
+       // List<String> name=new ArrayList<String>();
+        //List<String> score=new ArrayList<String>();
 
         //Not ready
        // dataeasy();
@@ -57,7 +57,7 @@ public class HighscoreFragment extends Fragment
 
 
      //Not ready
-    public void dataeasy()
+  /*  public void dataeasy()
     {
 
         fireBaseRootNode= FirebaseDatabase.getInstance();
@@ -97,7 +97,7 @@ public class HighscoreFragment extends Fragment
 
     }
 
-
+*/
 
 
     private  void buttonListener(){

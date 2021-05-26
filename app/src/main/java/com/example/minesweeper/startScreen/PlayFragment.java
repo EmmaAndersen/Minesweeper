@@ -32,7 +32,7 @@ public class PlayFragment extends Fragment
     Button customButton;
     Button backButton;
     private View view;
-    private MediaPlayer mediaPlayer;
+   // private MediaPlayer mediaPlayer;
 
 
     public PlayFragment(){}
@@ -44,7 +44,7 @@ public class PlayFragment extends Fragment
         view = inflater.inflate(R.layout.play_screen, container, false);
         buttonListener();
         //display the bling sound
-                      blingsound();
+                    //  blingsound();
 
         return view;
     }
@@ -139,7 +139,7 @@ public class PlayFragment extends Fragment
 
 
     //function to display the bling sound
-        public void blingsound(){
+    /*    public void blingsound(){
             if (mediaPlayer == null) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.bling);
             }
@@ -161,6 +161,6 @@ public class PlayFragment extends Fragment
         super.onStop();
         mediaPlayer.release();
         mediaPlayer = null;
-    }
+    }*/
 
 }

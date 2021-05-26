@@ -23,23 +23,24 @@ import com.example.minesweeper.startScreen.StartFragment;
 public class MainActivity extends AppCompatActivity {
 
     public static FragmentManager fragmentManager;
+   // Board board;
+    // ConstraintLayout constraintLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_Minesweeper);
+        //setTheme(R.style.Theme_Minesweeper);
         fragmentManager =  getSupportFragmentManager();
         setContentView(R.layout.activity_main);
-
-
         if(findViewById(R.id.container) != null) {
             if (savedInstanceState != null)
                 return;
         }
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.container, MenuManager.getInstance().startFragment, null);
-            fragmentTransaction.commit();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.container, MenuManager.getInstance().startFragment, null);
+        fragmentTransaction.commit();
     }
 
-
-
 }
+
+
+

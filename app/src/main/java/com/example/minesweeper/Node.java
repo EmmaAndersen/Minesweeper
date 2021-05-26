@@ -139,7 +139,7 @@ public class Node {
              //We have to find where we want to put the timer before to add the time in the database
             //for the moment it's auto. at 0
                 // Read from the database the number of user
-           fireBaseRootNode= FirebaseDatabase.getInstance();
+        /*   fireBaseRootNode= FirebaseDatabase.getInstance();
             databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -156,16 +156,16 @@ public class Node {
                     // Failed to read value
                     Log.w("TAG", "Failed to read value.", error.toException());
                 }
-            });
+            });*/
 
 
-             //Enter the name of the player and is score
+       /*      //Enter the name of the player and is score
              databaseReference  = fireBaseRootNode.getReference("easy/user"+i+"/score");//database.getReference("message/java/user"+i+"/score");
              databaseReference.setValue("0");//""+timer.getTime());
              //We add the new player to the total of player
              databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
              databaseReference.setValue(""+(i+1));
-
+*/
             Log.d("timeValue", "0");//String.valueOf(timer.getTime()));
 
 
@@ -176,27 +176,8 @@ public class Node {
             return true;
         }
 
-        //Reveal this node and all adjacent nodes, disables the click function of the button
-        if (nodeContains == NodeContains.EMPTY) {
-            if (button.isClickable()) {
-                ImageButton[] buttons = new ImageButton[edges.length];
-                Log.d("BREAK", String.valueOf("BREAK"));
-                for (int i = 0, edgesLength = edges.length; i < edgesLength; i++) {
-                    Edge edge = edges[i];
-
-                    buttons[i] = (ImageButton) viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY);
-                    Log.d("but I", String.valueOf(buttons[i].getId()));
-                    //edge.toNode.RevealNode((ImageButton) viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY), viewRequest, sizeOfBoardX, sizeOfBoardY);
-                }
-
-                button.setClickable(false);
-
-                for (int i = 0, buttonsLength = buttons.length; i < buttonsLength; i++) {
-                    RevealNode(buttons[i], viewRequest, sizeOfBoardX, sizeOfBoardY);
-                }
-            }
+        button.setClickable(false);
         GraphicsHandler.RevealNodeTextureUpdate(button, this);
-        }
         return false;
     }
 }

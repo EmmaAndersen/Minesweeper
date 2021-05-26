@@ -28,20 +28,20 @@ import androidx.fragment.app.Fragment;
 public class GameActivity extends Activity {
     private Board board;
     ConstraintLayout constraintLayout;
-    private MediaPlayer mediaPlayer;
+  //  private MediaPlayer mediaPlayer;
 
-    ImageButton button;
+   // ImageButton button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
-
         constraintLayout  = findViewById(R.id.boardView);
-        board = new Board(4,4,3);
+        board = new Board(4,4,5);
         populateNodeList();
 
     }
+
 
     private ViewRequest viewRequest = new ViewRequest() {
 
@@ -49,20 +49,19 @@ public class GameActivity extends Activity {
             return findViewById(id);
         }
     };
+
     /**
      * <h1>Creates ImageButtons and sets their attributes according to the created board </h1>
      *
      * @author Erik Broman
      * @since 2021-05-13
      */
-    public void populateNodeList() {
+    private void populateNodeList() {
 
         //Create a ImageButton for every node
         for (int i = 0; i < board.nodes.length; i++) {
-            button = new ImageButton(this);
-
             Node node = board.nodes[i];
-
+            ImageButton button = new ImageButton(this);
             button.setImageResource(R.drawable.hidden);
 
             //Gives the button a unique id that is equivalent to the element of the node the button represents in the board.nodes array.
@@ -87,32 +86,20 @@ public class GameActivity extends Activity {
             button.setBottom(button.getTop() + 128);
 
             //set LayoutParams to WRAP_CONTENT as this does not stretch the image
-            //button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             button.setLayoutParams(new ViewGroup.LayoutParams(256, 256));
 
             //when a hidden node is clicked reveal the node and set it to NOT clickable, if hidden node is a bomb trigger Game Over
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(node.RevealNode(button,viewRequest, board.gridX, board.gridY))
+                    if(node.RevealNode(button,viewRequest,board.gridX,board.gridY))
                     {
                         Log.d("GameOver","GameOver");//Game OVER
-
-                        //display the boom sound
-                      boomsound();
-                      //display the joke
-                        try {
-                            ConnectionAPI();
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }
             });
-
+            //Log.d("BAJS", button.toString());
             //add the button to the constraintLayout
-
             constraintLayout.addView(button);
 
             //Used to manipulate the button in the constraint layout
@@ -125,26 +112,24 @@ public class GameActivity extends Activity {
             }
             //left side of this square is connected to the right side of the square to the right of this square
             else {
-                set.connect(button.getId(), ConstraintSet.LEFT, findViewById(i - 1).getId(), ConstraintSet.RIGHT);
+                set.connect(button.getId(), ConstraintSet.LEFT, findViewById(i - board.gridX).getId(), ConstraintSet.RIGHT);
             }
 
-            // IT CRASHES HERE WTF SO WE COMMENTED OUT
             //top side of this square is connected to the bottom side of the constraint layout
-          /*  if (board.nodes[i].posY == 0) {
+            if (board.nodes[i].posY == 0) {
                 set.connect(button.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
             }
             //top side of this square is connected to the bottom side of the square above this square
             else {
-                set.connect(button.getId(), ConstraintSet.TOP, findViewById(i - board.gridY).getId(), ConstraintSet.BOTTOM);
-            }*/
+                set.connect(button.getId(), ConstraintSet.TOP, findViewById(i - 1).getId(), ConstraintSet.BOTTOM);
+            }
 
             //Updates the constraint layout with the constraints for the new button
             set.applyTo(constraintLayout);
         }
     }
 
-
-    //function to display the boom sound
+  /*  //function to display the boom sound
         public void boomsound(){
             if (mediaPlayer == null) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.boom);
@@ -209,5 +194,5 @@ public class GameActivity extends Activity {
                 }
             }
         });
-    }
+    }*/
 }
