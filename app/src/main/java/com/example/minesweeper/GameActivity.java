@@ -15,6 +15,11 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.minesweeper.startScreen.PlayFragment;
+import com.example.minesweeper.startScreen.StartFragment;
 
 import java.io.IOException;
 
@@ -32,7 +37,6 @@ public class GameActivity extends Activity {
     private Board board;
     ConstraintLayout constraintLayout;
      private MediaPlayer mediaPlayer;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,10 +164,13 @@ public class GameActivity extends Activity {
             }
         });
 
-        gameOverAlert.setNegativeButton("Main menu", new DialogInterface.OnClickListener() {
+        gameOverAlert.setNegativeButton("Return to Main menu", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "No clicked", Toast.LENGTH_SHORT).show();
+                Intent mainIntent = new Intent(GameActivity.this, MainActivity.class);
+                //finish();
+                startActivity(mainIntent);
+                //Toast.makeText(getApplicationContext(), "No clicked", Toast.LENGTH_SHORT).show();
             }
         });
         gameOverAlert.show();
