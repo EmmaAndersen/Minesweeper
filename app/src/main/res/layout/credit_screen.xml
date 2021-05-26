@@ -13,13 +13,13 @@
         android:layout_marginTop="85dp"
         android:fontFamily="@font/merriweather_light"
         android:text="@string/credit_button"
-        android:textColor="#270C59"
+        android:textColor="@color/tabIndicatorColor"
         android:textSize="25sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,8 @@
         android:layout_marginTop="655dp"
         android:text="@string/back_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/button_design"/>
 
     <ImageView
         android:id="@+id/imageView"

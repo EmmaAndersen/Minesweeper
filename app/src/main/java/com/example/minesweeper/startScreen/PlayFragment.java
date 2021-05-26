@@ -42,7 +42,6 @@ public class PlayFragment extends Fragment
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.play_screen, container, false);
         buttonListener();
-
         return view;
     }
     /**
@@ -83,17 +82,12 @@ public class PlayFragment extends Fragment
 
             if(intent != null)
             {
-                //v.getContext().startActivity(intent);
                startActivity(intent);
-                Log.d("HEJSAN" , String.valueOf(getActivity()));
-
             }
-            //MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment , null ).commit();
-
-               //Toast.makeText(getActivity().getApplicationContext(), easy, Toast.LENGTH_SHORT).show();
         }
 
     };
+
     private View.OnClickListener buttonListenerIntermediate = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -102,8 +96,8 @@ public class PlayFragment extends Fragment
 
                 Toast.makeText(getActivity().getApplicationContext(), intermidate, Toast.LENGTH_SHORT).show();
         }
-
     };
+
     private View.OnClickListener buttonListenerHard = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -112,15 +106,14 @@ public class PlayFragment extends Fragment
 
                 Toast.makeText(getActivity().getApplicationContext(), hard, Toast.LENGTH_SHORT).show();
         }
-
     };
+
     private View.OnClickListener buttonListenerBack = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
 
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().startFragment, null ).commit();
         }
-
     };
 
     private View.OnClickListener buttonListenerCustom = new View.OnClickListener(){
@@ -131,7 +124,5 @@ public class PlayFragment extends Fragment
 
                 Toast.makeText(getActivity().getApplicationContext(), custom, Toast.LENGTH_SHORT).show();
         }
-
     };
-
 }

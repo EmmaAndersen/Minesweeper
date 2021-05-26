@@ -93,7 +93,7 @@ public class GameActivity extends Activity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(node.RevealNode(button,viewRequest, board.gridX, board.gridY))
+                    if(node.RevealNode(button,viewRequest, board.gridY))
                     {
                         Log.d("GameOver","GameOver");//Game OVER
                     }

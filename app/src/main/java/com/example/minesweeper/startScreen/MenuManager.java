@@ -44,6 +44,7 @@ public  class MenuManager {
         startFragment = new StartFragment();
         highscoreFragment = new HighscoreFragment();
         creditFragment = new CreditFragment();
+        playFragment = new PlayFragment();
 
     }
 

@@ -39,8 +39,6 @@ public class HighscoreFragment extends Fragment
                              Bundle savedInstanceState){
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.highscore, container, false);
-       // activity = new HighScoreActivity();
-
         //buttonListener();
         return view;
     }

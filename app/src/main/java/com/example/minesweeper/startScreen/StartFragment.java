@@ -73,7 +73,6 @@ public class StartFragment extends Fragment
         public void onClick(View v) {
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().playFragment, null ).commit();
         }
-
     };
 
     private View.OnClickListener buttonListenerCredit = new View.OnClickListener(){
@@ -81,10 +80,10 @@ public class StartFragment extends Fragment
         public void onClick(View v) {
 
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().creditFragment, null ).commit();
-
         }
 
     };
+
     private View.OnClickListener buttonListenerHighscore = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -93,15 +92,9 @@ public class StartFragment extends Fragment
 
             if(intent != null)
             {
-                //v.getContext().startActivity(intent);
                 startActivity(intent);
-                Log.d("HEJSAN" , String.valueOf(getActivity()));
-
             }
-               // MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment, null ).commit();
-
         }
-
     };
     private View.OnClickListener buttonListenerQuit = new View.OnClickListener(){
         @Override
@@ -111,7 +104,6 @@ public class StartFragment extends Fragment
                 // Activity.finish();
                 //System.exit(0);
                 Toast.makeText(getActivity().getApplicationContext(), quit, Toast.LENGTH_SHORT).show();
-
         }
 
     };

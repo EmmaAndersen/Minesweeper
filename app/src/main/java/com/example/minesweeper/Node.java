@@ -116,7 +116,7 @@ public class Node {
      * @author Erik Broman
      * @since 2021-05-06
      */
-    public boolean RevealNode(ImageButton button, ViewRequest viewRequest, int sizeOfBoardX, int sizeOfBoardY)//1 is dead
+    public boolean RevealNode(ImageButton button, ViewRequest viewRequest, int sizeOfBoardY)//1 is dead
     {
         Log.d("IDofThisButton", String.valueOf(button.getId()));
         //we don't allow clicks to reveal flagged nodes
@@ -127,7 +127,8 @@ public class Node {
         isHidden = false; //TODO check if actually used don't think it is
 
         //reveal the bomb and returns that the user has lost
-        if (nodeContains == NodeContains.BOMB) {
+        if (nodeContains == NodeContains.BOMB)
+        {
             GraphicsHandler.RevealNodeTextureUpdate(button, this);
            /* fireBaseRootNode = FirebaseDatabase.getInstance();
             databaseReference = fireBaseRootNode.getReference("easy");
@@ -136,28 +137,35 @@ public class Node {
             Log.d("timeValue", String.valueOf(timer.getTime()));*/
             return true;
         }
-
-        //Reveal this node and all adjacent nodes, disables the click function of the button
-        if (nodeContains == NodeContains.EMPTY) {
-            if (button.isClickable()) {
-                ImageButton[] buttons = new ImageButton[edges.length];
-                Log.d("BREAK", String.valueOf("BREAK"));
-                for (int i = 0, edgesLength = edges.length; i < edgesLength; i++) {
-                    Edge edge = edges[i];
-
-                    buttons[i] = (ImageButton) viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY);
-                    Log.d("but I", String.valueOf(buttons[i].getId()));
-                    //edge.toNode.RevealNode((ImageButton) viewRequest.requestViewByID(edge.toNode.posX /** sizeOfBoardX*/ + edge.toNode.posY * sizeOfBoardY), viewRequest, sizeOfBoardX, sizeOfBoardY);
-                }
-
+        if (nodeContains == NodeContains.EMPTY)
+        {
+            if (button.isClickable())
+            {
+                GraphicsHandler.RevealNodeTextureUpdate(button, this);
                 button.setClickable(false);
-
-                for (int i = 0, buttonsLength = buttons.length; i < buttonsLength; i++) {
-                    RevealNode(buttons[i], viewRequest, sizeOfBoardX, sizeOfBoardY);
-                }
             }
-        GraphicsHandler.RevealNodeTextureUpdate(button, this);
         }
+        //Reveal this node and all adjacent nodes, disables the click function of the button
+       //if (nodeContains == NodeContains.EMPTY) {
+          //  if (button.isClickable()) {
+            //    ImageButton[] buttons = new ImageButton[edges.length];
+              //  Log.d("BREAK", String.valueOf("BREAK"));
+                //for (int i = 0, edgesLength = edges.length; i < edgesLength; i++) {
+                  //  Edge edge = edges[i];
+
+                    //buttons[i] = (ImageButton) viewRequest.requestViewByID(edge.toNode.posX + edge.toNode.posY * sizeOfBoardY);
+                   // Log.d("but I", String.valueOf(buttons[i].getId()));
+            //    }
+
+               // button.setClickable(false);
+
+            //    for (int i = 0, buttonsLength = buttons.length; i < buttonsLength; i++) {
+              //      RevealNode(buttons[i], viewRequest, sizeOfBoardY);
+              //  }
+          //  }
+      //  }
+
+        GraphicsHandler.RevealNodeTextureUpdate(button, this);
         return false;
     }
 }
