@@ -3,6 +3,7 @@ package com.example.minesweeper;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -152,7 +153,10 @@ public class GameActivity extends Activity {
         gameOverAlert.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "Yes clicked", Toast.LENGTH_SHORT).show();
+                Intent retryIntent = getIntent();
+                finish();
+                startActivity(retryIntent);
+                //Toast.makeText(getApplicationContext(), "Yes clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
