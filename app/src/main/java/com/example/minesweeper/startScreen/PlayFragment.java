@@ -2,6 +2,7 @@ package com.example.minesweeper.startScreen;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ public class PlayFragment extends Fragment
     Button customButton;
     Button backButton;
     private View view;
-   // private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
 
 
     public PlayFragment(){}
@@ -44,7 +45,7 @@ public class PlayFragment extends Fragment
         view = inflater.inflate(R.layout.play_screen, container, false);
         buttonListener();
         //display the bling sound
-                    //  blingsound();
+        blingsound();
 
         return view;
     }
@@ -139,9 +140,9 @@ public class PlayFragment extends Fragment
 
 
     //function to display the bling sound
-    /*    public void blingsound(){
+        public void blingsound(){
             if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(this, R.raw.bling);
+                mediaPlayer = MediaPlayer.create(getContext(), R.raw.bling);
             }
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
@@ -157,10 +158,10 @@ public class PlayFragment extends Fragment
         }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         mediaPlayer.release();
         mediaPlayer = null;
-    }*/
+    }
 
 }

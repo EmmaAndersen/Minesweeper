@@ -3,7 +3,9 @@ package com.example.minesweeper;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.common.api.Response;
+
+import java.io.IOException;
+
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /**
  * <h1>Creates the user interface based on the board created at the start of the game</h1>
@@ -28,7 +39,7 @@ import androidx.fragment.app.Fragment;
 public class GameActivity extends Activity {
     private Board board;
     ConstraintLayout constraintLayout;
-  //  private MediaPlayer mediaPlayer;
+     private MediaPlayer mediaPlayer;
 
 
     @Override
@@ -36,7 +47,7 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
         constraintLayout  = findViewById(R.id.boardView);
-        board = new Board(4,4,1);
+        board = new Board(4,4,3);
         populateNodeList();
 
     }
@@ -94,6 +105,15 @@ public class GameActivity extends Activity {
                     if(node.RevealNode(button,viewRequest, board.gridY, node))
                     {
                         Log.d("GameOver","GameOver");//Game OVER
+                        //display the boom sound
+                        boomsound();
+                        //display the joke
+                        try {
+                            ConnectionAPI();
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
@@ -128,7 +148,7 @@ public class GameActivity extends Activity {
         }
     }
 
-  /*  //function to display the boom sound
+   //function to display the boom sound
         public void boomsound(){
             if (mediaPlayer == null) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.boom);
@@ -169,29 +189,31 @@ public class GameActivity extends Activity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(okhttp3.Call call, IOException e) {
                 e.printStackTrace();
             }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
 
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                 if (response.isSuccessful()) {
                     final String myResponse = response.body().string();
                     String rep = myResponse.substring(myResponse.indexOf("setup") + 8, myResponse.indexOf("punchline") - 3)
                             + "\n" + myResponse.substring(myResponse.indexOf("punchline") + 12, myResponse.length() - 4);
 
-                            GameActivity.this.runOnUiThread(new Runnable() {
+                    GameActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
 
                             Toast.makeText(getApplicationContext(), rep,
-                                    Toast.LENGTH_SHORT).show();
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
 
                 }
             }
+
+
         });
-    }*/
+    }
 }

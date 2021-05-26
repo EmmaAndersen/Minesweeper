@@ -23,8 +23,7 @@ import com.example.minesweeper.startScreen.StartFragment;
 public class MainActivity extends AppCompatActivity {
 
     public static FragmentManager fragmentManager;
-   // Board board;
-    // ConstraintLayout constraintLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

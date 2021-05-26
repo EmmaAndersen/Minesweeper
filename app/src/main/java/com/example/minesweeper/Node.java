@@ -186,8 +186,7 @@ public class Node {
             }
         }
 
-        button.setClickable(false);
-        GraphicsHandler.RevealNodeTextureUpdate(button, this);
+
         return false;
     }
 }
