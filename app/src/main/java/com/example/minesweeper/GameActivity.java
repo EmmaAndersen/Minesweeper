@@ -152,8 +152,8 @@ public class GameActivity extends Activity {
      */
     private void GameOverAlertShow(){
         AlertDialog.Builder gameOverAlert = new AlertDialog.Builder(this);
-        gameOverAlert.setTitle("Title");
-        gameOverAlert.setMessage("This is a message");
+        gameOverAlert.setTitle("GAME OVER");
+        gameOverAlert.setMessage("Text for dad jokes");
         gameOverAlert.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
