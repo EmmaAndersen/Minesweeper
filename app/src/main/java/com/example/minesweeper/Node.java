@@ -129,6 +129,7 @@ public class Node {
 
         //disable the button, we only want buttons to be clickable once
         button.setClickable(false);
+        button.setLongClickable(false);
 
         //change graphics of the button to what is hidden beneath
         GraphicsHandler.RevealNodeTextureUpdate(button, currentNode);
@@ -189,4 +190,28 @@ public class Node {
 
         return false;
     }
+
+
+    /**
+     * <h1>Flips the boolean value of isFlagged and updates the graphics of the selected node</h1>
+     *
+     * @author Erik Broman
+     * @since 2021-05-26
+     */
+    public void ToggleFlag(ImageButton button)
+    {
+        //IF we want to disable clicks entirely on flagged nodes uncomment the code below
+
+        if (isFlagged)
+        {
+            //button.setClickable(true);
+            GraphicsHandler.SetTextureToHidden(button,this);
+        }
+        else{
+            //button.setClickable(false);
+            GraphicsHandler.SetTextureToFlag(button,this);
+        }
+        isFlagged = !isFlagged;
+    }
+
 }

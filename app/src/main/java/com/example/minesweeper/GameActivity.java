@@ -1,28 +1,17 @@
 package com.example.minesweeper;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.telecom.Call;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.gms.common.api.Response;
 
 import java.io.IOException;
 
@@ -104,17 +93,19 @@ public class GameActivity extends Activity {
                 public void onClick(View view) {
                     if(node.RevealNode(button,viewRequest, board.gridY, node))
                     {
-                        Log.d("GameOver","GameOver");//Game OVER
-                        //display the boom sound
-                        boomsound();
-                        //display the joke
-                        try {
-                            ConnectionAPI();
-                        }
-                        catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        GameOver();
                     }
+                }
+            });
+
+            //when a hidden node is longClicked then toggle the flag attribute, on->off, off->on
+            button.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    node.ToggleFlag(button);
+
+                    //return true to not carry this event further!
+                    return true;
                 }
             });
 
@@ -145,6 +136,34 @@ public class GameActivity extends Activity {
 
             //Updates the constraint layout with the constraints for the new button
             set.applyTo(constraintLayout);
+        }
+    }
+
+    /**
+     * <h1>Disables all buttons, plays sfx, and tries to show a joke </h1>
+     * sfx + jokes done by unknown
+     * @author Erik Broman
+     * @since  Edited 2021-05-26
+     */
+    private void GameOver()
+    {
+        Log.d("GameOver","GameOver");//Game OVER
+
+        //disables all buttons, and reveals them
+        for (int i = 0; i < board.nodes.length; i++) {
+            findViewById(i).setClickable(false);
+            findViewById(i).setLongClickable(false);
+            GraphicsHandler.RevealNodeTextureUpdate(findViewById(i),board.nodes[i]);
+        }
+
+        //display the boom sound
+        boomsound();
+        //display the joke
+        try {
+            ConnectionAPI();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
