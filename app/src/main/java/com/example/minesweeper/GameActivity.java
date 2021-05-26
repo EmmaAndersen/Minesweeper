@@ -1,6 +1,8 @@
 package com.example.minesweeper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -140,6 +142,30 @@ public class GameActivity extends Activity {
     }
 
     /**
+     * <h2>Shows a pop up alert</h2>
+     * @author Emma-sophie Andersen
+     */
+    private void GameOverAlertShow(){
+        AlertDialog.Builder gameOverAlert = new AlertDialog.Builder(this);
+        gameOverAlert.setTitle("Title");
+        gameOverAlert.setMessage("This is a message");
+        gameOverAlert.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "Yes clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        gameOverAlert.setNegativeButton("Main menu", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "No clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        gameOverAlert.show();
+    }
+
+    /**
      * <h1>Disables all buttons, plays sfx, and tries to show a joke </h1>
      * sfx + jokes done by unknown
      * @author Erik Broman
@@ -156,6 +182,11 @@ public class GameActivity extends Activity {
             GraphicsHandler.RevealNodeTextureUpdate(findViewById(i),board.nodes[i]);
         }
 
+        GameOverAlertShow();
+
+        /**
+         * @author Cassandra
+         * */
         //display the boom sound
         boomsound();
         //display the joke
@@ -167,6 +198,9 @@ public class GameActivity extends Activity {
         }
     }
 
+    /**
+     * @author Cassandra
+     * */
    //function to display the boom sound
         public void boomsound(){
             if (mediaPlayer == null) {
@@ -192,7 +226,9 @@ public class GameActivity extends Activity {
         mediaPlayer = null;
     }
 
-
+    /**
+     * @author Cassandra
+     * */
     //function to obtain the joke
     public void ConnectionAPI() throws IOException {
 
