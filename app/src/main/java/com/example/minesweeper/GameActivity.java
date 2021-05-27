@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -22,6 +23,8 @@ import com.example.minesweeper.startScreen.PlayFragment;
 import com.example.minesweeper.startScreen.StartFragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -36,16 +39,17 @@ import okhttp3.Request;
 public class GameActivity extends Activity {
     private Board board;
     ConstraintLayout constraintLayout;
-     private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
+    private TextView dialogTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
-        constraintLayout  = findViewById(R.id.boardView);
-        board = new Board(4,4,3);
+        constraintLayout = findViewById(R.id.boardView);
+        board = new Board(4, 4, 3);
         populateNodeList();
-
+        dialogTextView = new TextView(getBaseContext());
     }
 
 
@@ -74,7 +78,7 @@ public class GameActivity extends Activity {
             button.setId(i);
 
             //removePadding to get the desired grid shape
-            button.setPadding(0,0,0,0);
+            button.setPadding(0, 0, 0, 0);
 
             //prevents image from being croped
             button.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -98,8 +102,7 @@ public class GameActivity extends Activity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(node.RevealNode(button,viewRequest, board.gridY, node))
-                    {
+                    if (node.RevealNode(button, viewRequest, board.gridY, node)) {
                         GameOver();
                     }
                 }
@@ -148,12 +151,13 @@ public class GameActivity extends Activity {
 
     /**
      * <h2>Shows a pop up alert</h2>
+     *
      * @author Emma-sophie Andersen
      */
-    private void GameOverAlertShow(){
+    private void GameOverAlertShow() {
         AlertDialog.Builder gameOverAlert = new AlertDialog.Builder(this);
         gameOverAlert.setTitle("GAME OVER");
-        gameOverAlert.setMessage("Text for dad jokes");
+        gameOverAlert.setCustomTitle(dialogTextView);
         gameOverAlert.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -179,18 +183,18 @@ public class GameActivity extends Activity {
     /**
      * <h1>Disables all buttons, plays sfx, and tries to show a joke </h1>
      * sfx + jokes done by unknown
+     *
      * @author Erik Broman
-     * @since  Edited 2021-05-26
+     * @since Edited 2021-05-26
      */
-    private void GameOver()
-    {
-        Log.d("GameOver","GameOver");//Game OVER
+    private void GameOver() {
+        Log.d("GameOver", "GameOver");//Game OVER
 
         //disables all buttons, and reveals them
         for (int i = 0; i < board.nodes.length; i++) {
             findViewById(i).setClickable(false);
             findViewById(i).setLongClickable(false);
-            GraphicsHandler.RevealNodeTextureUpdate(findViewById(i),board.nodes[i]);
+            GraphicsHandler.RevealNodeTextureUpdate(findViewById(i), board.nodes[i]);
         }
 
         GameOverAlertShow();
@@ -203,32 +207,31 @@ public class GameActivity extends Activity {
         //display the joke
         try {
             ConnectionAPI();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * @author Cassandra
-     * */
-   //function to display the boom sound
-        public void boomsound(){
-            if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(this, R.raw.boom);
-            }
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-
-                }
-            });
-            mediaPlayer.start();
-
+     */
+    //function to display the boom sound
+    public void boomsound() {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.boom);
         }
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+
+                mediaPlayer.release();
+                mediaPlayer = null;
+
+            }
+        });
+        mediaPlayer.start();
+
+    }
 
     @Override
     protected void onStop() {
@@ -239,7 +242,7 @@ public class GameActivity extends Activity {
 
     /**
      * @author Cassandra
-     * */
+     */
     //function to obtain the joke
     public void ConnectionAPI() throws IOException {
 
@@ -271,8 +274,9 @@ public class GameActivity extends Activity {
                         @Override
                         public void run() {
 
-                            Toast.makeText(getApplicationContext(), rep,
-                                    Toast.LENGTH_LONG).show();
+                            dialogTextView.setText("GAME OVER!\n\n" + rep);
+                            /*Toast.makeText(getApplicationContext(), rep,
+                                    Toast.LENGTH_LONG).show();*/
                         }
                     });
 

@@ -69,7 +69,9 @@ public class StartFragment extends Fragment
     private View.OnClickListener buttonListenerStart = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
+            if(MenuManager.getInstance().playFragment != null){
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().playFragment, null ).commit();
+            }
         }
 
     };
