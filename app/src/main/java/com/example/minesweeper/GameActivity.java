@@ -165,6 +165,7 @@ public class GameActivity extends Activity {
                 Intent retryIntent = getIntent();
                 finish();
                 startActivity(retryIntent);
+                dialog.cancel();
                 //Toast.makeText(getApplicationContext(), "Yes clicked", Toast.LENGTH_SHORT).show();
             }
         });
@@ -175,6 +176,7 @@ public class GameActivity extends Activity {
                 Intent mainIntent = new Intent(GameActivity.this, MainActivity.class);
                 //finish();
                 startActivity(mainIntent);
+                dialog.cancel();
                 //Toast.makeText(getApplicationContext(), "No clicked", Toast.LENGTH_SHORT).show();
             }
         });
