@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.minesweeper.GameActivity;
@@ -49,6 +50,7 @@ public class PlayFragment extends Fragment
 
         return view;
     }
+
     /**
      * <h1>Instantiate all the buttons.</h1>
      *
@@ -82,12 +84,13 @@ public class PlayFragment extends Fragment
     private View.OnClickListener buttonListenerEasy = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
+
             CharSequence  easy = "You chose the easymode";
          Intent intent = new Intent(getActivity(),GameActivity.class);
 
             if(intent != null)
             {
-                //v.getContext().startActivity(intent);
+
                startActivity(intent);
                 Log.d("HEJSAN" , String.valueOf(getActivity()));
 
@@ -114,7 +117,16 @@ public class PlayFragment extends Fragment
 
             CharSequence  hard = "You chose the hardmode";
 
-                Toast.makeText(getActivity().getApplicationContext(), hard, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(),GameActivity.class);
+
+            if(intent != null)
+            {
+
+                startActivity(intent);
+                Log.d("HEJSAN" , String.valueOf(getActivity()));
+
+            }
+               // Toast.makeText(getActivity().getApplicationContext(), hard, Toast.LENGTH_SHORT).show();
         }
 
     };
@@ -139,7 +151,7 @@ public class PlayFragment extends Fragment
     };
 
 
-    //function to display the bling sound
+   //function to display the bling sound
         public void blingsound(){
             if (mediaPlayer == null) {
                 mediaPlayer = MediaPlayer.create(getContext(), R.raw.bling);
@@ -160,8 +172,10 @@ public class PlayFragment extends Fragment
     @Override
     public void onStop() {
         super.onStop();
-        mediaPlayer.release();
-        mediaPlayer = null;
+        if(mediaPlayer != null){
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
 }
