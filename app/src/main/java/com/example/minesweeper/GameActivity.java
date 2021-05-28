@@ -363,6 +363,9 @@ public class GameActivity extends Activity {
         for (int i = 0; i < board.nodes.length; i++) {
             findViewById(i).setClickable(false);
             findViewById(i).setLongClickable(false);
+            if(board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
+                GraphicsHandler.SetTextureToFlag(findViewById(i), board.nodes[i]);
+            }
         }
     }
 
