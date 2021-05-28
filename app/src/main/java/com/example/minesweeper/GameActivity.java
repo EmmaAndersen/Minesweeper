@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
@@ -47,7 +49,8 @@ public class GameActivity extends Activity {
     private MediaPlayer mediaPlayer;
     protected TextView dialogTextView;
     private Timer gameTimer;
-    int difficulityLevel = -1;
+    private int difficulityLevel = -1;
+    private float scalingFactor = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,8 +155,7 @@ public class GameActivity extends Activity {
                         GameOver();
                     }
                     board.emptyNodesLeft--;
-                    if (board.emptyNodesLeft == 0)
-                    {
+                    if (board.emptyNodesLeft == 0) {
                         WinGame();
                     }
                 }
@@ -163,11 +165,9 @@ public class GameActivity extends Activity {
             button.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if(node.ToggleFlag(button))
-                    {
+                    if (node.ToggleFlag(button)) {
                         board.flaggedNodes++;
-                    }
-                    else{
+                    } else {
                         board.flaggedNodes--;
                     }
                     //return true to not carry this event further!
@@ -182,17 +182,31 @@ public class GameActivity extends Activity {
                 private long startTouchTime;
                 private float pressedX;
                 private float pressedY;
+                private float startDistBetweenTouches;
                 private boolean stayedWithinClickDistance = true;
+                private float currentScalingFactor = GameActivity.this.scalingFactor;
 
+                @RequiresApi(api = Build.VERSION_CODES.Q)
                 @Override
                 public boolean onTouch(View view, MotionEvent event) {
+                    MotionEvent.PointerCoords pointer1 = new MotionEvent.PointerCoords();
+                    MotionEvent.PointerCoords pointer0 = new MotionEvent.PointerCoords();
 
                     switch (event.getAction()) {
                         //the start of all touch actions!
                         case MotionEvent.ACTION_DOWN: {
-                            startTouchTime = System.currentTimeMillis();
-                            pressedX = constraintLayout.getX() - event.getRawX();
-                            pressedY = constraintLayout.getY() - event.getRawY();
+                            if (1 == event.getPointerCount()) {
+                                Log.d("ONE FINGERS FOUND!",String.valueOf(1));
+                                startTouchTime = System.currentTimeMillis();
+                                pressedX = constraintLayout.getX() - event.getRawX();
+                                pressedY = constraintLayout.getY() - event.getRawY();
+                            }
+                            if (2 == event.getPointerCount()) {
+                                Log.d("TWO FINGERS FOUND!",String.valueOf(2));
+                                event.getPointerCoords(0, pointer0);
+                                event.getPointerCoords(1, pointer1);
+                                startDistBetweenTouches = distance(event.getRawX(0), event.getRawY(0), event.getRawX(1), event.getRawY(1));
+                            }
                             break;
                         }
                         case MotionEvent.ACTION_MOVE: {
@@ -202,50 +216,68 @@ public class GameActivity extends Activity {
                                 }
                             } else {
                                 //move the entire game board
-                                int limLeft = (getResources().getDisplayMetrics().widthPixels-(board.gridX*256));
+                                int limLeft = (getResources().getDisplayMetrics().widthPixels - (board.gridX * 256));
                                 int limRight = 0;
 
-                                int limTop = (getResources().getDisplayMetrics().heightPixels -(board.gridY*256));
-                                int limBottom = (int)dpToPx(64); //OBS!!! this value is the top margin of the constraintLayout I DO NOT KNOW how to get this value from the params.
-                                    constraintLayout.setX(event.getRawX() + pressedX);
-                                    constraintLayout.setY(event.getRawY() + pressedY);
+                                int limTop = (getResources().getDisplayMetrics().heightPixels - (board.gridY * 256));
+                                int limBottom = (int) dpToPx(64); //OBS!!! this value is the top margin of the constraintLayout I DO NOT KNOW how to get this value from the params.
+                                constraintLayout.setX(event.getRawX() + pressedX);
+                                constraintLayout.setY(event.getRawY() + pressedY);
 
-                                if (limLeft > constraintLayout.getX())
-                                {
+                                if (limLeft > constraintLayout.getX()) {
                                     constraintLayout.setX(limLeft);
-                                }
-                                else if (limRight < constraintLayout.getX())
-                                {
+                                } else if (limRight < constraintLayout.getX()) {
                                     constraintLayout.setX(limRight);
                                 }
-                                if (limTop > constraintLayout.getY())
-                                {
+                                if (limTop > constraintLayout.getY()) {
                                     constraintLayout.setY(limTop);
-                                }
-                                else if (limBottom < constraintLayout.getY())
-                                {
+                                } else if (limBottom < constraintLayout.getY()) {
                                     constraintLayout.setY(limBottom);
                                 }
                             }
+
+                            //Only used when we detect two fingers on the screen meening we want to scale!
+                            if (2 == event.getPointerCount()) {
+                                Log.d("",String.valueOf(1));
+                                event.getPointerCoords(0, pointer0);
+                                event.getPointerCoords(1, pointer1);
+                                Log.d("Current scaleingFactor: ",String.valueOf(scalingFactor));
+                                Log.d("Current dist: ",String.valueOf(distance(pointer0.x, pointer0.y, pointer1.x, pointer1.y)));
+                                Log.d("Current startDistBetweenTouches: ",String.valueOf(startDistBetweenTouches));
+                                //if (Math.abs(distance(event.getRawX(0), event.getRawY(0), event.getRawX(1), event.getRawY(1))-startDistBetweenTouches)>200){
+                                scalingFactor = scalingFactor * (distance(event.getRawX(0), event.getRawY(0), event.getRawX(1), event.getRawY(1)) / startDistBetweenTouches)/100;
+
+                                if(scalingFactor < 0.25)
+                                    scalingFactor = 0.25f;
+                                else if(scalingFactor > 8)
+                                    scalingFactor = 8;
+                                constraintLayout.setScaleX(scalingFactor);
+                                constraintLayout.setScaleY(scalingFactor);
+                                startDistBetweenTouches = distance(event.getRawX(0), event.getRawY(0), event.getRawX(1), event.getRawY(1));
+                            }//}
                             break;
                         }
                         //End of the touch action
                         case MotionEvent.ACTION_UP: {
-                            long touchDuration = System.currentTimeMillis() - startTouchTime;
-                            if (stayedWithinClickDistance) {
-                                if (touchDuration < MAX_SHORT_CLICK_DURATION) {
-                                    //Short click event has occurred
-                                    if (button.isClickable()) {
-                                        button.performClick();
-                                    }
-                                } else {
-                                    //long click event has occured
-                                    if (button.isLongClickable()) {
-                                        button.performLongClick();
+                            if (2 == event.getPointerCount())
+                                scalingFactor = currentScalingFactor;
+                            if (1 == event.getPointerCount()) {
+                                long touchDuration = System.currentTimeMillis() - startTouchTime;
+                                if (stayedWithinClickDistance) {
+                                    if (touchDuration < MAX_SHORT_CLICK_DURATION) {
+                                        //Short click event has occurred
+                                        if (button.isClickable()) {
+                                            button.performClick();
+                                        }
+                                    } else {
+                                        //long click event has occured
+                                        if (button.isLongClickable()) {
+                                            button.performLongClick();
+                                        }
                                     }
                                 }
+                                stayedWithinClickDistance = true;
                             }
-                            stayedWithinClickDistance = true;
                         }
                     }
                     return true;
@@ -330,7 +362,7 @@ public class GameActivity extends Activity {
         for (int i = 0; i < board.nodes.length; i++) {
             findViewById(i).setClickable(false);
             findViewById(i).setLongClickable(false);
-            if(board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
+            if (board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
                 GraphicsHandler.RevealNodeTextureUpdate(findViewById(i), board.nodes[i]);
             }
         }
@@ -356,14 +388,13 @@ public class GameActivity extends Activity {
      * @author Erik Broman
      * @since 2021-05-28
      */
-    private void WinGame()
-    {
+    private void WinGame() {
         Log.d("WinGame", "GG");//Win game
         //disables all buttons
         for (int i = 0; i < board.nodes.length; i++) {
             findViewById(i).setClickable(false);
             findViewById(i).setLongClickable(false);
-            if(board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
+            if (board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
                 GraphicsHandler.SetTextureToFlag(findViewById(i), board.nodes[i]);
             }
         }
