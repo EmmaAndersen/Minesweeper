@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,18 +38,22 @@ import okhttp3.Request;
  * @since 2021-05-13
  */
 public class GameActivity extends Activity {
-    private Board board;
-    ConstraintLayout constraintLayout;
+    protected Board board;
+    protected ConstraintLayout constraintLayout;
     private MediaPlayer mediaPlayer;
-    private TextView dialogTextView;
+    protected TextView dialogTextView;
+    //GameThread gameThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
         constraintLayout = findViewById(R.id.boardView);
+        //gameThread = new GameThread(this);
+        //gameThread.start();
         board = new Board(4, 4, 3);
-        populateNodeList();
+        //populateNodeList();
+        myGameThread();
         dialogTextView = new TextView(getBaseContext());
     }
 
@@ -60,14 +65,28 @@ public class GameActivity extends Activity {
         }
     };
 
+    private void myGameThread(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+
+                populateNodeList();
+
+                } catch (final Exception e){
+                    Log.i("runnable test", "exception in thread");
+                }
+            }
+        });
+    }
+
     /**
      * <h1>Creates ImageButtons and sets their attributes according to the created board </h1>
      *
      * @author Erik Broman
      * @since 2021-05-13, Edited 2021-05-26
      */
-    private void populateNodeList() {
-
+    protected void populateNodeList() {
         //Create a ImageButton for every node
         for (int i = 0; i < board.nodes.length; i++) {
             Node node = board.nodes[i];
