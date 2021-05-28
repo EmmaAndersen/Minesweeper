@@ -114,7 +114,7 @@ public class Node {
      *
      * @return boolean This returns true if we revealed a mine, GAME OVER.
      * @author Erik Broman
-     * @since 2021-05-06, Edited 2021-05-26
+     * @since 2021-05-06, Edited 2021-05-26, Edited 2021-05-28
      */
     public boolean RevealNode(ImageButton button, ViewRequest viewRequest,  int sizeOfBoardY, Node currentNode)//1 is dead
     {
@@ -135,42 +135,6 @@ public class Node {
 
         //returns that the user has lost as the reveal node was a bomb
         if (currentNode.nodeContains == NodeContains.BOMB) {
-          /* fireBaseRootNode = FirebaseDatabase.getInstance();
-           databaseReference = fireBaseRootNode.getReference("easy");
-
-           //databaseReference.setValue(timer.getTime());
-           Log.d("timeValue", String.valueOf(timer.getTime()));*/
-
-            //We have to find where we want to put the timer before to add the time in the database
-           //for the moment it's auto. at 0
-               // Read from the database the number of user
-       /*   fireBaseRootNode= FirebaseDatabase.getInstance();
-           databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
-           databaseReference.addValueEventListener(new ValueEventListener() {
-               @Override
-               public void onDataChange(DataSnapshot dataSnapshot) {
-                   // This method is called once with the initial value and again
-                   // whenever data at this location is updated.
-                   String value = dataSnapshot.getValue(String.class);
-                   i = Integer.parseInt(value);
-                   Log.d("TAG", "Value is: " + value);
-               }
-
-               @Override
-               public void onCancelled(DatabaseError error) {
-                   // Failed to read value
-                   Log.w("TAG", "Failed to read value.", error.toException());
-               }
-           });*/
-
-
-      /*      //Enter the name of the player and is score
-            databaseReference  = fireBaseRootNode.getReference("easy/user"+i+"/score");//database.getReference("message/java/user"+i+"/score");
-            databaseReference.setValue("0");//""+timer.getTime());
-            //We add the new player to the total of player
-            databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
-            databaseReference.setValue(""+(i+1));
-*/
             return true;
         }
 
@@ -181,12 +145,11 @@ public class Node {
             {
                 ImageButton temp =  (ImageButton) viewRequest.requestViewByID(currentNode.edges[i].toNode.posX + currentNode.edges[i].toNode.posY * sizeOfBoardY);
                 if(temp.isClickable()){
-                    RevealNode(temp, viewRequest, sizeOfBoardY,currentNode.edges[i].toNode);
+                    temp.performClick();
+                    //RevealNode(temp, viewRequest, sizeOfBoardY,currentNode.edges[i].toNode);
                 }
             }
         }
-
-
         return false;
     }
 
@@ -197,7 +160,7 @@ public class Node {
      * @author Erik Broman
      * @since 2021-05-26
      */
-    public void ToggleFlag(ImageButton button)
+    public boolean ToggleFlag(ImageButton button)
     {
         //IF we want to disable clicks entirely on flagged nodes uncomment the code below
 
@@ -211,6 +174,7 @@ public class Node {
             GraphicsHandler.SetTextureToFlag(button,this);
         }
         isFlagged = !isFlagged;
+        return isFlagged;
     }
 
 }

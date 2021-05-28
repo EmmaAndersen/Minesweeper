@@ -27,6 +27,10 @@ public class Board {
     private final int bombCount;
     //used to randomize location of bombs on the game board
     private final Random random;
+    //Keeps track of our win condition
+    public int emptyNodesLeft;
+    //keeps track of how many nodes have been flagged
+    public int flaggedNodes =0;
 
     public Board(int countX, int countY, int countBomb) {
         gridX = countX;
@@ -34,6 +38,7 @@ public class Board {
         bombCount = countBomb;
         random = new Random();
         bombNodes = new Node[bombCount];
+        emptyNodesLeft = (gridX * gridY) - bombCount;
         PopulateBoard();
         PopulateBombs();
         PopulateNumbers();

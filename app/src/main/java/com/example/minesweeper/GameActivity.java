@@ -39,7 +39,7 @@ import okhttp3.Request;
  * <h1>Creates the user interface based on the board created at the start of the game</h1>
  *
  * @author Erik Broman
- * @since 2021-05-13
+ * @since 2021-05-13, Edited 2021-05-28
  */
 public class GameActivity extends Activity {
     protected Board board;
@@ -72,7 +72,12 @@ public class GameActivity extends Activity {
         dialogTextView = new TextView(getBaseContext());
     }
 
-
+    /**
+     * <h1>Used to find view by ID outside of activity </h1>
+     *
+     * @author Erik Broman
+     * @since 2021-05-26, Edited 2021-05-28
+     */
     private ViewRequest viewRequest = new ViewRequest() {
 
         public View requestViewByID(int id) {
@@ -104,7 +109,7 @@ public class GameActivity extends Activity {
      * <h1>Creates ImageButtons and sets their attributes according to the created board </h1>
      *
      * @author Erik Broman
-     * @since 2021-05-13, Edited 2021-05-26
+     * @since 2021-05-13, Edited 2021-05-26, Edited 2021-05-28
      */
     protected void populateNodeList() {
         //Create a ImageButton for every node
@@ -146,6 +151,11 @@ public class GameActivity extends Activity {
                     if (node.RevealNode(button, viewRequest, board.gridY, node)) {
                         GameOver();
                     }
+                    board.emptyNodesLeft--;
+                    if (board.emptyNodesLeft == 0)
+                    {
+                        WinGame();
+                    }
                 }
             });
 
@@ -153,26 +163,19 @@ public class GameActivity extends Activity {
             button.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    node.ToggleFlag(button);
-
+                    if(node.ToggleFlag(button))
+                    {
+                        board.flaggedNodes++;
+                    }
+                    else{
+                        board.flaggedNodes--;
+                    }
                     //return true to not carry this event further!
                     return true;
                 }
             });
 
-
-/*
-            @Override
-            public boolean onScale(ScaleGestureDetector detector) {
-                scaleFactor *= detector.getScaleFactor();
-
-                //preventing the object to get too large or too small.
-                scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 5.0f));
-
-                invalidate();
-                return true;
-            }*/
-
+            //Handles differantiating between dragging, clicking and long click, also handles dragging
             button.setOnTouchListener(new View.OnTouchListener() {
                 private static final int MAX_SHORT_CLICK_DURATION = 200;
                 private static final int MAX_CLICK_DISTANCE = 20;
@@ -198,9 +201,31 @@ public class GameActivity extends Activity {
                                     stayedWithinClickDistance = false;
                                 }
                             } else {
-                                //view.getParent();
-                                constraintLayout.setX(event.getRawX() + pressedX);
-                                constraintLayout.setY(event.getRawY() + pressedY);
+                                //move the entire game board
+                                int limLeft = (getResources().getDisplayMetrics().widthPixels-(board.gridX*256));
+                                int limRight = 0;
+
+                                int limTop = (getResources().getDisplayMetrics().heightPixels -(board.gridY*256));
+                                int limBottom = (int)dpToPx(64); //OBS!!! this value is the top margin of the constraintLayout I DO NOT KNOW how to get this value from the params.
+                                    constraintLayout.setX(event.getRawX() + pressedX);
+                                    constraintLayout.setY(event.getRawY() + pressedY);
+
+                                if (limLeft > constraintLayout.getX())
+                                {
+                                    constraintLayout.setX(limLeft);
+                                }
+                                else if (limRight < constraintLayout.getX())
+                                {
+                                    constraintLayout.setX(limRight);
+                                }
+                                if (limTop > constraintLayout.getY())
+                                {
+                                    constraintLayout.setY(limTop);
+                                }
+                                else if (limBottom < constraintLayout.getY())
+                                {
+                                    constraintLayout.setY(limBottom);
+                                }
                             }
                             break;
                         }
@@ -296,16 +321,18 @@ public class GameActivity extends Activity {
      * sfx + jokes done by unknown
      *
      * @author Erik Broman
-     * @since Edited 2021-05-26
+     * @since 2021-05-26, Edited 2021-05-28
      */
     private void GameOver() {
         Log.d("GameOver", "GameOver");//Game OVER
 
-        //disables all buttons, and reveals them
+        //disables all buttons, and reveals the bombs
         for (int i = 0; i < board.nodes.length; i++) {
             findViewById(i).setClickable(false);
             findViewById(i).setLongClickable(false);
-            GraphicsHandler.RevealNodeTextureUpdate(findViewById(i), board.nodes[i]);
+            if(board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
+                GraphicsHandler.RevealNodeTextureUpdate(findViewById(i), board.nodes[i]);
+            }
         }
 
         GameOverAlertShow();
@@ -322,6 +349,23 @@ public class GameActivity extends Activity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * <h1>Disables all buttons, and handles the win </h1>
+     *
+     * @author Erik Broman
+     * @since 2021-05-28
+     */
+    private void WinGame()
+    {
+        Log.d("WinGame", "GG");//Win game
+        //disables all buttons
+        for (int i = 0; i < board.nodes.length; i++) {
+            findViewById(i).setClickable(false);
+            findViewById(i).setLongClickable(false);
+        }
+    }
+
 
     //function to display the boom sound
     public void boomsound() {
@@ -394,22 +438,39 @@ public class GameActivity extends Activity {
         });
     }
 
+    /**
+     * <h1>calculates distance between two points </h1>
+     *
+     * @return returns distance in Dp
+     * @author Erik Broman
+     * @since 2021-05-28
+     */
     private float distance(float x1, float y1, float x2, float y2) {
-        Log.d("x1,x2,y1,y2", String.valueOf(x1 + ", " + x2 + ", " + y1 + ", " + y2));
         float dx = x1 - x2;
         float dy = y1 - y2;
-        Log.d("dx, dy", String.valueOf(dx + ", " + dy));
         float distanceInPx = (float) Math.sqrt(dx * dx + dy * dy);
-        Log.d("distanceInPx", String.valueOf(distanceInPx));
-        Log.d("pxToDp", String.valueOf(pxToDp(distanceInPx)));
         return pxToDp(distanceInPx);
     }
 
+    /**
+     * <h1>converts between Pixels and Dp </h1>
+     *
+     * @return Dp
+     * @author Erik Broman
+     * @since 2021-05-28
+     */
     private float pxToDp(float px) {
         return px / getResources().getDisplayMetrics().density;
     }
 
-    private float dpTopx(float dp) {
+    /**
+     * <h1>converts between Dp and Pixels </h1>
+     *
+     * @return pixels
+     * @author Erik Broman
+     * @since 2021-05-28
+     */
+    private float dpToPx(float dp) {
         return dp * getResources().getDisplayMetrics().density;
     }
 }
