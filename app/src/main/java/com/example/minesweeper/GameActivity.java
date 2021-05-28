@@ -43,22 +43,20 @@ public class GameActivity extends Activity {
     protected ConstraintLayout constraintLayout;
     private MediaPlayer mediaPlayer;
     protected TextView dialogTextView;
-    //GameThread gameThread;
+    private Timer gameTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
         constraintLayout = findViewById(R.id.boardView);
-        //gameThread = new GameThread(this);
-        //gameThread.start();
         board = new Board(4, 4, 3);
         myGameThread();
+        gameTimer = new Timer();
+        gameTimer.chronometer = findViewById(R.id.chronometerID);
+
         dialogTextView = new TextView(getBaseContext());
-
     }
-
-
 
     private ViewRequest viewRequest = new ViewRequest() {
 
@@ -251,14 +249,11 @@ public class GameActivity extends Activity {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-
                 mediaPlayer.release();
                 mediaPlayer = null;
-
             }
         });
         mediaPlayer.start();
-
     }
 
     @Override
@@ -309,11 +304,8 @@ public class GameActivity extends Activity {
                                     Toast.LENGTH_LONG).show();*/
                         }
                     });
-
                 }
             }
-
-
         });
     }
 }

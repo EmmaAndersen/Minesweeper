@@ -74,7 +74,6 @@ public class Node {
     public Node(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
-        timer = new Timer();
     }
 
     /**

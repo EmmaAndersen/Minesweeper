@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Timer extends AppCompatActivity {
 
     boolean timerIsRunning;
-    private Chronometer chronometer;
+    public Chronometer chronometer;
     private long pauseOffset;  //To calculate the time difference from when we started the chronometer and until it is paused.
     public int time;
 
@@ -23,9 +23,9 @@ public class Timer extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
-        chronometer = findViewById(R.id.chronometerID);
+
     }
 
     public int getTime(){
