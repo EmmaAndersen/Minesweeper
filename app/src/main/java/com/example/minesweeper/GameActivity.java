@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -29,17 +32,25 @@ public class GameActivity extends Activity {
     private Board board;
     ConstraintLayout constraintLayout;
      private MediaPlayer mediaPlayer;
-
+     int difficulityLevel = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
         constraintLayout  = findViewById(R.id.boardView);
-        board = new Board(4,4,3);
+        int width = getIntent().getIntExtra("width",10);
+        int height = getIntent().getIntExtra("height",10);
+        int bombCount = getIntent().getIntExtra("bombCount",10);
+        difficulityLevel = getIntent().getIntExtra("difficulityLevel",-1);
+        board = new Board(width,height,bombCount);
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) constraintLayout.getLayoutParams();
+        params.width = width*256;
+        params.height = height*256;
+        constraintLayout.setLayoutParams(params);
         populateNodeList();
-
     }
+
 
 
     private ViewRequest viewRequest = new ViewRequest() {
@@ -87,6 +98,8 @@ public class GameActivity extends Activity {
             //set LayoutParams to WRAP_CONTENT as this does not stretch the image
             button.setLayoutParams(new ViewGroup.LayoutParams(256, 256));
 
+            button.setVisibility(View.VISIBLE);
+
             //when a hidden node is clicked reveal the node and set it to NOT clickable, if hidden node is a bomb trigger Game Over
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -108,6 +121,77 @@ public class GameActivity extends Activity {
                     return true;
                 }
             });
+
+
+/*
+            @Override
+            public boolean onScale(ScaleGestureDetector detector) {
+                scaleFactor *= detector.getScaleFactor();
+
+                //preventing the object to get too large or too small.
+                scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 5.0f));
+
+                invalidate();
+                return true;
+            }*/
+
+            button.setOnTouchListener(new View.OnTouchListener() {
+                private static final int MAX_SHORT_CLICK_DURATION = 200;
+                private static final int MAX_CLICK_DISTANCE = 20;
+                private long startTouchTime;
+                private float pressedX;
+                private float pressedY;
+                private boolean stayedWithinClickDistance = true;
+
+                @Override
+                public boolean onTouch(View view, MotionEvent event) {
+
+                    switch (event.getAction()) {
+                        //the start of all touch actions!
+                        case MotionEvent.ACTION_DOWN: {
+                            startTouchTime = System.currentTimeMillis();
+                            pressedX = constraintLayout.getX() - event.getRawX();
+                            pressedY = constraintLayout.getY() - event.getRawY();
+                            break;
+                        }
+                        case MotionEvent.ACTION_MOVE: {
+                            if(stayedWithinClickDistance){
+                                if (distance(pressedX, pressedY, constraintLayout.getX() -event.getRawX(), constraintLayout.getY()-event.getRawY()) > MAX_CLICK_DISTANCE) {
+                                    stayedWithinClickDistance = false;
+                                }
+                            }
+                            else{
+                                //view.getParent();
+                                constraintLayout.setX(event.getRawX() + pressedX);
+                                constraintLayout.setY(event.getRawY() + pressedY);
+                            }
+                            break;
+                        }
+                        //End of the touch action
+                        case MotionEvent.ACTION_UP: {
+                            long touchDuration = System.currentTimeMillis() - startTouchTime;
+                            if (stayedWithinClickDistance){
+                                if (touchDuration < MAX_SHORT_CLICK_DURATION){
+                                    //Short click event has occurred
+                                    if(button.isClickable())
+                                    {
+                                    button.performClick();
+                                    }
+                                }
+                                else
+                                {
+                                    //long click event has occured
+                                    if(button.isLongClickable())
+                                    {
+                                    button.performLongClick();
+                                    }
+                                }
+                            }
+                            stayedWithinClickDistance = true;
+                        }
+                    }
+                    return true;
+                }});
 
             //add the button to the constraintLayout
             constraintLayout.addView(button);
@@ -167,7 +251,7 @@ public class GameActivity extends Activity {
         }
     }
 
-   //function to display the boom sound
+    //function to display the boom sound
         public void boomsound(){
             if (mediaPlayer == null) {
                 mediaPlayer = MediaPlayer.create(this, R.raw.boom);
@@ -234,5 +318,23 @@ public class GameActivity extends Activity {
 
 
         });
+    }
+
+    private float distance(float x1, float y1, float x2, float y2) {
+        Log.d("x1,x2,y1,y2",String.valueOf(x1+", "+x2+ ", "+y1+", "+y2));
+        float dx = x1 - x2;
+        float dy = y1 - y2;
+        Log.d("dx, dy",String.valueOf(dx+", "+dy));
+        float distanceInPx = (float) Math.sqrt(dx * dx + dy * dy);
+        Log.d("distanceInPx",String.valueOf(distanceInPx));
+        Log.d("pxToDp",String.valueOf(pxToDp(distanceInPx)));
+        return pxToDp(distanceInPx);
+    }
+
+    private float pxToDp(float px) {
+        return px / getResources().getDisplayMetrics().density;
+    }
+    private float dpTopx(float dp) {
+        return dp * getResources().getDisplayMetrics().density;
     }
 }
