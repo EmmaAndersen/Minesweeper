@@ -52,7 +52,6 @@ public class GameActivity extends Activity {
         //gameThread = new GameThread(this);
         //gameThread.start();
         board = new Board(4, 4, 3);
-        //populateNodeList();
         myGameThread();
         dialogTextView = new TextView(getBaseContext());
     }
@@ -65,6 +64,10 @@ public class GameActivity extends Activity {
         }
     };
 
+    /**
+     * <h2>Creates a Runnable and handles the game logic on it</h2>
+     * @author Emma-sophie Andersen
+     * */
     private void myGameThread(){
         runOnUiThread(new Runnable() {
             @Override
