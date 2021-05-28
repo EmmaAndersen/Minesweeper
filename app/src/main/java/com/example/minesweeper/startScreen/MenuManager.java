@@ -24,7 +24,6 @@ public  class MenuManager {
     public CreditFragment creditFragment;
     public PlayFragment playFragment;
 
-
     /**
      * <h1>A singleton for the class</h1>
      *

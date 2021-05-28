@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.minesweeper.startScreen.MenuManager;
 import com.example.minesweeper.startScreen.PlayFragment;
 import com.example.minesweeper.startScreen.StartFragment;
 
@@ -50,7 +51,9 @@ public class GameActivity extends Activity {
         board = new Board(4, 4, 3);
         populateNodeList();
         dialogTextView = new TextView(getBaseContext());
+
     }
+
 
 
     private ViewRequest viewRequest = new ViewRequest() {
@@ -184,7 +187,7 @@ public class GameActivity extends Activity {
     }
 
     /**
-     * <h1>Disables all buttons, plays sfx, and tries to show a joke </h1>
+     * <h1>Disables all buttons, plays sfx, shows a joke </h1>
      * sfx + jokes done by unknown
      *
      * @author Erik Broman
@@ -239,8 +242,10 @@ public class GameActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        mediaPlayer.release();
-        mediaPlayer = null;
+        if(mediaPlayer != null){
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
     /**

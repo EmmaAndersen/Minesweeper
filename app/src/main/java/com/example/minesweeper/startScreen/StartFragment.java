@@ -1,7 +1,9 @@
 package com.example.minesweeper.startScreen;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ public class StartFragment extends Fragment
                              Bundle savedInstanceState){
         //Inflate the layout for this fragment
         view = inflater.inflate(R.layout.start_screen, container, false);
+
        buttonListener();
         return view;
     }
@@ -67,13 +70,15 @@ public class StartFragment extends Fragment
      * @since 2021-05-13
      */
     private View.OnClickListener buttonListenerStart = new View.OnClickListener(){
+
         @Override
         public void onClick(View v) {
+
             if(MenuManager.getInstance().playFragment != null){
+
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().playFragment, null ).commit();
             }
         }
-
     };
 
     private View.OnClickListener buttonListenerCredit = new View.OnClickListener(){
@@ -81,15 +86,12 @@ public class StartFragment extends Fragment
         public void onClick(View v) {
 
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().creditFragment, null ).commit();
-
         }
-
     };
+
     private View.OnClickListener buttonListenerHighscore = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-
-               // MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment, null ).commit();
 
             Intent intent = new Intent(getActivity(), HighScoreActivity.class);
 
@@ -98,8 +100,8 @@ public class StartFragment extends Fragment
                 startActivity(intent);
             }
         }
-
     };
+
     private View.OnClickListener buttonListenerQuit = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -108,9 +110,9 @@ public class StartFragment extends Fragment
                 // Activity.finish();
                 //System.exit(0);
                 Toast.makeText(getActivity().getApplicationContext(), quit, Toast.LENGTH_SHORT).show();
-
         }
 
     };
+
 
 }
