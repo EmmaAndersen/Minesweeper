@@ -86,13 +86,16 @@ public class PlayFragment extends Fragment
         public void onClick(View v) {
 
             CharSequence  easy = "You chose the easymode";
-         Intent intent = new Intent(getActivity(),GameActivity.class);
-
+            Intent intent = new Intent(getActivity(),GameActivity.class);
+            intent.putExtra("width",6);
+            intent.putExtra("height",6);
+            intent.putExtra("bombCount",8);
+            intent.putExtra("difficulityLevel",0);
             if(intent != null)
             {
 
                startActivity(intent);
-                Log.d("HEJSAN" , String.valueOf(getActivity()));
+                Log.d("HEJSAN1" , String.valueOf(getActivity()));
 
             }
             //MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment , null ).commit();
@@ -104,31 +107,42 @@ public class PlayFragment extends Fragment
     private View.OnClickListener buttonListenerIntermediate = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
+            CharSequence  easy = "You chose the easymode";
+            Intent intent = new Intent(getActivity(),GameActivity.class);
+            intent.putExtra("width",10);
+            intent.putExtra("height",10);
+            intent.putExtra("bombCount",15);
+            intent.putExtra("difficulityLevel",1);
+            if(intent != null)
+            {
+                //v.getContext().startActivity(intent);
+                startActivity(intent);
+                Log.d("HEJSAN2" , String.valueOf(getActivity()));
 
-            CharSequence  intermidate = "You chose the intermidatemode";
+            }
+            //CharSequence  intermidate = "You chose the intermidatemode";
 
-                Toast.makeText(getActivity().getApplicationContext(), intermidate, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), intermidate, Toast.LENGTH_SHORT).show();
         }
 
     };
     private View.OnClickListener buttonListenerHard = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-
-            CharSequence  hard = "You chose the hardmode";
-
+            CharSequence  easy = "You chose the easymode";
             Intent intent = new Intent(getActivity(),GameActivity.class);
-
+            intent.putExtra("width",20);
+            intent.putExtra("height",20);
+            intent.putExtra("bombCount",30);
+            intent.putExtra("difficulityLevel",2);
             if(intent != null)
             {
-
+                //v.getContext().startActivity(intent);
                 startActivity(intent);
-                Log.d("HEJSAN" , String.valueOf(getActivity()));
+                Log.d("HEJSAN3" , String.valueOf(getActivity()));
 
             }
-               // Toast.makeText(getActivity().getApplicationContext(), hard, Toast.LENGTH_SHORT).show();
         }
-
     };
     private View.OnClickListener buttonListenerBack = new View.OnClickListener(){
         @Override
