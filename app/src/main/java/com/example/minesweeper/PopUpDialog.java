@@ -2,6 +2,7 @@ package com.example.minesweeper;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.util.Log;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,19 +25,22 @@ public class PopUpDialog {
 
     public PopUpDialog(Activity _activity){
         this.activity = _activity;
-        textView_title = dialog.findViewById(R.id.txtview_title);
-        textView_body = dialog.findViewById(R.id.txtview_yourHighScore);
-        textView_enterScore = dialog.findViewById(R.id.txtview_enterHighScore);
-        editText_name = dialog.findViewById(R.id.edt_name);
-        textView_submit = dialog.findViewById(R.id.txt_submit);
-
-        initPopUp();
-    }
-
-    public void initPopUp(){
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.win_popup);
+
+        textView_title = dialog.findViewById(R.id.txtView_title);
+        textView_body = dialog.findViewById(R.id.txtView_yourHighScore);
+        textView_enterScore = dialog.findViewById(R.id.txtView_enterHighScore);
+        editText_name = dialog.findViewById(R.id.edt_name);
+        textView_submit = dialog.findViewById(R.id.txt_submit);
+
+        //initPopUp();
+    }
+
+    public void initPopUp(){
+
+        Log.d("popup test", activity.toString());
     }
 
     public void showPopUp(){

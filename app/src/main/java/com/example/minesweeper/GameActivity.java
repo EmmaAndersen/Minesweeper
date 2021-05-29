@@ -2,6 +2,7 @@ package com.example.minesweeper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -48,6 +49,7 @@ public class GameActivity extends Activity {
     protected TextView dialogTextView;
     private Timer gameTimer;
     int difficulityLevel = -1;
+    PopUpDialog popupDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class GameActivity extends Activity {
         //populateNodeList();
         gameTimer = new Timer();
         gameTimer.chronometer = findViewById(R.id.chronometerID);
-
+        popupDialog = new PopUpDialog(this);
 
         dialogTextView = new TextView(getBaseContext());
     }
@@ -155,6 +157,7 @@ public class GameActivity extends Activity {
                     if (board.emptyNodesLeft == 0)
                     {
                         WinGame();
+                        popupDialog.showPopUp();
                     }
                 }
             });
