@@ -25,6 +25,11 @@ import androidx.fragment.app.FragmentManager;
 import com.example.minesweeper.startScreen.MenuManager;
 import com.example.minesweeper.startScreen.PlayFragment;
 import com.example.minesweeper.startScreen.StartFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +52,9 @@ public class GameActivity extends Activity {
     private MediaPlayer mediaPlayer;
     protected TextView dialogTextView;
     private Timer gameTimer;
+    private FirebaseDatabase fireBaseRootNode;
+    private DatabaseReference databaseReference;
+    int i;
     int difficulityLevel = -1;
 
     @Override
@@ -60,8 +68,8 @@ public class GameActivity extends Activity {
         difficulityLevel = getIntent().getIntExtra("difficulityLevel", -1);
         board = new Board(width, height, bombCount);
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) constraintLayout.getLayoutParams();
-        params.width = width * 256;
-        params.height = height * 256;
+        params.width = width * 106;//256
+        params.height = height * 106;
         constraintLayout.setLayoutParams(params);
         myGameThread();
         //populateNodeList();
@@ -123,19 +131,19 @@ public class GameActivity extends Activity {
             button.setScaleType(ImageView.ScaleType.FIT_XY);
 
             //Max resolution for the image
-            button.setMaxWidth(128);
-            button.setMaxHeight(128);
+            button.setMaxWidth(18);//128
+            button.setMaxHeight(18);
 
             //sets the position using the top left corner
-            button.setLeft(128 * node.posX);
-            button.setTop(128 * node.posY);
+            button.setLeft(18 * node.posX);
+            button.setTop(18 * node.posY);
 
             //sets the width and height for the button
-            button.setRight(button.getLeft() + 128);
-            button.setBottom(button.getTop() + 128);
+            button.setRight(button.getLeft() + 18);
+            button.setBottom(button.getTop() + 18);
 
             //set LayoutParams to WRAP_CONTENT as this does not stretch the image
-            button.setLayoutParams(new ViewGroup.LayoutParams(256, 256));
+            button.setLayoutParams(new ViewGroup.LayoutParams(106, 106));//256
 
             button.setVisibility(View.VISIBLE);
 
@@ -308,6 +316,8 @@ public class GameActivity extends Activity {
             GraphicsHandler.RevealNodeTextureUpdate(findViewById(i), board.nodes[i]);
         }
 
+        gameTimer.PauseTimer();
+        enterscoredatabase(gameTimer.getTime());
         GameOverAlertShow();
 
         /**
@@ -322,6 +332,47 @@ public class GameActivity extends Activity {
             e.printStackTrace();
         }
     }
+
+    public void enterscoredatabase(int timegame)
+    {
+        fireBaseRootNode= FirebaseDatabase.getInstance();
+        databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                i = Integer.parseInt(value);
+                Log.d("TAG", "Value of user is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("TAG", "Failed to read value.", error.toException());
+            }
+        });
+
+
+        //Enter the name of the player and is score
+        if(difficulityLevel==0) {
+            databaseReference = fireBaseRootNode.getReference("easy/user" + i );//database.getReference("message/java/user"+i+"/score");
+            databaseReference.setValue("" + timegame);//""+timer.getTime());
+        }
+        if(difficulityLevel==1) {
+            databaseReference = fireBaseRootNode.getReference("intermediate/user" + i );//database.getReference("message/java/user"+i+"/score");
+            databaseReference.setValue("" + timegame);//""+timer.getTime());
+        }
+        if(difficulityLevel==2) {
+            databaseReference = fireBaseRootNode.getReference("hard/user" + i );//database.getReference("message/java/user"+i+"/score");
+            databaseReference.setValue("" + timegame);//""+timer.getTime());
+        }
+        //We add the new player to the total of player
+        databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
+        databaseReference.setValue(""+(i+1));
+    }
+
 
     //function to display the boom sound
     public void boomsound() {
