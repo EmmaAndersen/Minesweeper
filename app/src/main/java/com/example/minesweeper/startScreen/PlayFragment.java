@@ -87,9 +87,9 @@ public class PlayFragment extends Fragment
 
             CharSequence  easy = "You chose the easymode";
             Intent intent = new Intent(getActivity(),GameActivity.class);
-            intent.putExtra("width",6);
-            intent.putExtra("height",6);
-            intent.putExtra("bombCount",8);
+            intent.putExtra("width",9);
+            intent.putExtra("height",9);
+            intent.putExtra("bombCount",10);
             intent.putExtra("difficulityLevel",0);
             if(intent != null)
             {
@@ -109,9 +109,9 @@ public class PlayFragment extends Fragment
         public void onClick(View v) {
             CharSequence  easy = "You chose the easymode";
             Intent intent = new Intent(getActivity(),GameActivity.class);
-            intent.putExtra("width",10);
-            intent.putExtra("height",10);
-            intent.putExtra("bombCount",15);
+            intent.putExtra("width",16);
+            intent.putExtra("height",16);
+            intent.putExtra("bombCount",40);
             intent.putExtra("difficulityLevel",1);
             if(intent != null)
             {
@@ -131,9 +131,9 @@ public class PlayFragment extends Fragment
         public void onClick(View v) {
             CharSequence  easy = "You chose the easymode";
             Intent intent = new Intent(getActivity(),GameActivity.class);
-            intent.putExtra("width",20);
-            intent.putExtra("height",20);
-            intent.putExtra("bombCount",30);
+            intent.putExtra("width",16);
+            intent.putExtra("height",30);
+            intent.putExtra("bombCount",99);
             intent.putExtra("difficulityLevel",2);
             if(intent != null)
             {
