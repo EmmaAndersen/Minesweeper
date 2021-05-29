@@ -17,6 +17,17 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.minesweeper.startScreen.MenuManager;
+import com.example.minesweeper.startScreen.PlayFragment;
+import com.example.minesweeper.startScreen.StartFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 
@@ -39,6 +50,7 @@ public class GameActivity extends Activity {
     int difficulityLevel = -1;
     PopUpDialog popupDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +71,7 @@ public class GameActivity extends Activity {
         gameTimer = new Timer();
         gameTimer.chronometer = findViewById(R.id.chronometerID);
         gameTimer.StartTimer();
-        popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ", "Submit your sore", "SUBMIT");
+        popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ", "Submit your sore", "SUBMIT", difficulityLevel);
 
         dialogTextView = new TextView(getBaseContext());
     }
@@ -368,7 +380,12 @@ public class GameActivity extends Activity {
                 GraphicsHandler.SetTextureToFlag(findViewById(i), board.nodes[i]);
             }
         }
+
+        gameTimer.PauseTimer();
+        //enterscoredatabase(gameTimer.getTime());
     }
+
+
 
 
     //function to display the boom sound
