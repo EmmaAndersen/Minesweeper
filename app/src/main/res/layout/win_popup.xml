@@ -18,9 +18,9 @@
         android:gravity="center"
 
         android:textAllCaps="true"
-        android:textColor="@color/tabIndicatorColor"
+        android:textColor="@color/white"
         android:textSize="18sp"
-        tools:text="YOU WON" />
+        tools:text="@string/popupTitle" />
 
 
     <TextView
@@ -34,7 +34,7 @@
 
         android:textColor="@color/tabIndicatorColor"
         android:textSize="18sp"
-        tools:text="Your score: " />
+        tools:text="@string/popupScore" />
 
     <TextView
         android:id="@+id/txtView_enterHighScore"
@@ -47,7 +47,7 @@
 
         android:textColor="@color/tabIndicatorColor"
         android:textSize="18sp"
-        tools:text="Submit highscore" />
+        tools:text="@string/popupsubmitHighScore" />
 
     <EditText
         android:id="@+id/edt_name"

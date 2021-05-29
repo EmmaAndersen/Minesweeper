@@ -10,4 +10,8 @@
     <string name="quit_button">Quit</string>
     <string name="back_button">Back</string>
     <string name="highscore_button">Highscore</string>
+
+    <string name="popupTitle">YOU WON!</string>
+    <string name="popupScore">Your time: </string>
+    <string name="popupsubmitHighScore">Submit high score</string>
 </resources>

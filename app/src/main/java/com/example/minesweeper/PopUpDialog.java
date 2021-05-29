@@ -7,9 +7,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 /**
  * Creates a custom pop up dialog
@@ -24,8 +21,9 @@ public class PopUpDialog {
     private TextView textView_submit;
     private Dialog dialog;
     private Activity activity;
+    private Timer timer;
 
-    public PopUpDialog(Activity activity){
+    public PopUpDialog(Activity activity, Timer timer){
         this.activity = activity;
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -36,6 +34,9 @@ public class PopUpDialog {
         textView_enterScore = dialog.findViewById(R.id.txtView_enterHighScore);
         editText_name = dialog.findViewById(R.id.edt_name);
         textView_submit = dialog.findViewById(R.id.txt_submit);
+        this.timer = timer;
+
+        Log.d("popup", textView_title.toString());
     }
 
     public void showPopUp(){
@@ -46,14 +47,13 @@ public class PopUpDialog {
         dialog.dismiss();
     }
 
-    public void setListerners(){
+    public void setListeners(){
         textView_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Thanks", activity.toString());
+                timer.ResetTimer();
             }
         });
     }
-
-
 }

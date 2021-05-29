@@ -2,12 +2,10 @@ package com.example.minesweeper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,21 +14,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import com.example.minesweeper.startScreen.MenuManager;
-import com.example.minesweeper.startScreen.PlayFragment;
-import com.example.minesweeper.startScreen.StartFragment;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Calendar;
 
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -70,7 +58,8 @@ public class GameActivity extends Activity {
         //populateNodeList();
         gameTimer = new Timer();
         gameTimer.chronometer = findViewById(R.id.chronometerID);
-
+        gameTimer.StartTimer();
+        popupDialog = new PopUpDialog(GameActivity.this, gameTimer);
 
         dialogTextView = new TextView(getBaseContext());
     }
@@ -160,9 +149,10 @@ public class GameActivity extends Activity {
                     if (board.emptyNodesLeft == 0)
                     {
                         WinGame();
-                        popupDialog = new PopUpDialog(GameActivity.this);
+
                         popupDialog.showPopUp();
-                        popupDialog.setListerners();
+                        popupDialog.setListeners();
+                        gameTimer.PauseTimer();
                     }
                 }
             });
