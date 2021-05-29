@@ -1,7 +1,8 @@
 package com.example.minesweeper;
 
-/*
- * This class is just for creating the timer itself. The code will be copy pasted into to game later on.
+/**
+ * Game timer. Handles the start, pause and reset function for the timer (chronometer). This is used for the highscore
+ * @author Emma-sophie Andersen
  * */
 
 import android.os.Bundle;
@@ -16,7 +17,7 @@ public class Timer extends AppCompatActivity {
     boolean timerIsRunning;
     public Chronometer chronometer;
     private long pauseOffset;  //To calculate the time difference from when we started the chronometer and until it is paused.
-    public int time;
+    public long time;
 
     String timerValue;  //not used yet, thinking of using this as the variable to store the time in the database (for high score)
 
@@ -28,7 +29,7 @@ public class Timer extends AppCompatActivity {
 
     }
 
-    public int getTime(){
+    public long getTime(){
         time = (int)chronometer.getBase();
         return time;
     }

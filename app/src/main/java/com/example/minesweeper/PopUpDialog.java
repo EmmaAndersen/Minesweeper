@@ -23,7 +23,7 @@ public class PopUpDialog {
     private Activity activity;
     private Timer timer;
 
-    public PopUpDialog(Activity activity, Timer timer){
+    public PopUpDialog(Activity activity, Timer timer, String titleText, String bodyText, String enterText, String submitText){
         this.activity = activity;
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -36,6 +36,8 @@ public class PopUpDialog {
         textView_submit = dialog.findViewById(R.id.txt_submit);
         this.timer = timer;
 
+        setPopUpData(titleText, bodyText, enterText, submitText);
+
         Log.d("popup", textView_title.toString());
     }
 
@@ -45,6 +47,13 @@ public class PopUpDialog {
 
     public void dismissPopUp(){
         dialog.dismiss();
+    }
+
+    private void setPopUpData(String titleText, String bodyText, String enterText, String submitText){
+        textView_title.setText(titleText);
+        textView_body.setText(bodyText);
+        textView_enterScore.setText(enterText);
+        textView_submit.setText(submitText);
     }
 
     public void setListeners(){

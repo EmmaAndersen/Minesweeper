@@ -59,7 +59,7 @@ public class GameActivity extends Activity {
         gameTimer = new Timer();
         gameTimer.chronometer = findViewById(R.id.chronometerID);
         gameTimer.StartTimer();
-        popupDialog = new PopUpDialog(GameActivity.this, gameTimer);
+        popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ", "Submit your sore", "SUBMIT");
 
         dialogTextView = new TextView(getBaseContext());
     }
