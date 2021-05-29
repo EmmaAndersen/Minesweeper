@@ -35,6 +35,8 @@ public class PopUpDialog {
     int i;
     int difficultyLevel;
 
+    private int seconds, minutes;
+
     public PopUpDialog(Activity activity, Timer timer, String titleText, String bodyText, String enterText, String submitText, int difficultyLevel) {
         this.activity = activity;
         dialog = new Dialog(activity);
@@ -94,17 +96,19 @@ public class PopUpDialog {
         //Enter the name of the player and is score
         if (difficulityLevel == 0) {
             databaseReference = fireBaseRootNode.getReference("easy/" + editText_name.getText().toString());//database.getReference("message/java/user"+i+"/score");
+            /*seconds = (int) (((timer.getTime() / 1000) / 60) / 60) / 60;
+            minutes = (int) ((((timer.getTime() / 1000) / 60) / 60) / 60) / 60;
+            seconds = seconds - (minutes * 60);
+            String totalTimeScore = "" + minutes + ": " + seconds;*/
+
             databaseReference.setValue("" + timer.getTime());//""+timer.getTime());
-        }
-        else if (difficulityLevel == 1) {
+        } else if (difficulityLevel == 1) {
             databaseReference = fireBaseRootNode.getReference("intermediate/" + editText_name.getText().toString());//database.getReference("message/java/user"+i+"/score");
             databaseReference.setValue("" + timer.getTime());//""+timer.getTime());
-        }
-        else if (difficulityLevel == 2) {
+        } else if (difficulityLevel == 2) {
             databaseReference = fireBaseRootNode.getReference("hard/" + editText_name.getText().toString());//database.getReference("message/java/user"+i+"/score");
             databaseReference.setValue("" + timer.getTime());//""+timer.getTime());
-        }
-        else{
+        } else {
             Log.d("catch high score error", String.valueOf(timer.getTime()));
         }
         //We add the new player to the total of player

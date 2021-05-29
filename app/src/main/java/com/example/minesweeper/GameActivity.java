@@ -6,10 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -70,6 +72,7 @@ public class GameActivity extends Activity {
         //populateNodeList();
         gameTimer = new Timer();
         gameTimer.chronometer = findViewById(R.id.chronometerID);
+
         gameTimer.StartTimer();
         popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ", "Submit your sore", "SUBMIT", difficulityLevel);
 
@@ -108,7 +111,6 @@ public class GameActivity extends Activity {
             }
         });
     }
-
 
 
     /**
@@ -158,8 +160,7 @@ public class GameActivity extends Activity {
                         GameOver();
                     }
                     board.emptyNodesLeft--;
-                    if (board.emptyNodesLeft == 0)
-                    {
+                    if (board.emptyNodesLeft == 0) {
                         WinGame();
 
                         popupDialog.showPopUp();
@@ -173,11 +174,9 @@ public class GameActivity extends Activity {
             button.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if(node.ToggleFlag(button))
-                    {
+                    if (node.ToggleFlag(button)) {
                         board.flaggedNodes++;
-                    }
-                    else{
+                    } else {
                         board.flaggedNodes--;
                     }
                     //return true to not carry this event further!
@@ -212,28 +211,22 @@ public class GameActivity extends Activity {
                                 }
                             } else {
                                 //move the entire game board
-                                int limLeft = (getResources().getDisplayMetrics().widthPixels-(board.gridX*256));
+                                int limLeft = (getResources().getDisplayMetrics().widthPixels - (board.gridX * 256));
                                 int limRight = 0;
 
-                                int limTop = (getResources().getDisplayMetrics().heightPixels -(board.gridY*256));
-                                int limBottom = (int)dpToPx(64); //OBS!!! this value is the top margin of the constraintLayout I DO NOT KNOW how to get this value from the params.
-                                    constraintLayout.setX(event.getRawX() + pressedX);
-                                    constraintLayout.setY(event.getRawY() + pressedY);
+                                int limTop = (getResources().getDisplayMetrics().heightPixels - (board.gridY * 256));
+                                int limBottom = (int) dpToPx(64); //OBS!!! this value is the top margin of the constraintLayout I DO NOT KNOW how to get this value from the params.
+                                constraintLayout.setX(event.getRawX() + pressedX);
+                                constraintLayout.setY(event.getRawY() + pressedY);
 
-                                if (limLeft > constraintLayout.getX())
-                                {
+                                if (limLeft > constraintLayout.getX()) {
                                     constraintLayout.setX(limLeft);
-                                }
-                                else if (limRight < constraintLayout.getX())
-                                {
+                                } else if (limRight < constraintLayout.getX()) {
                                     constraintLayout.setX(limRight);
                                 }
-                                if (limTop > constraintLayout.getY())
-                                {
+                                if (limTop > constraintLayout.getY()) {
                                     constraintLayout.setY(limTop);
-                                }
-                                else if (limBottom < constraintLayout.getY())
-                                {
+                                } else if (limBottom < constraintLayout.getY()) {
                                     constraintLayout.setY(limBottom);
                                 }
                             }
@@ -343,7 +336,7 @@ public class GameActivity extends Activity {
         for (int i = 0; i < board.nodes.length; i++) {
             findViewById(i).setClickable(false);
             findViewById(i).setLongClickable(false);
-            if(board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
+            if (board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
                 GraphicsHandler.RevealNodeTextureUpdate(findViewById(i), board.nodes[i]);
             }
         }
@@ -369,14 +362,13 @@ public class GameActivity extends Activity {
      * @author Erik Broman
      * @since 2021-05-28
      */
-    private void WinGame()
-    {
+    private void WinGame() {
         Log.d("WinGame", "GG");//Win game
         //disables all buttons
         for (int i = 0; i < board.nodes.length; i++) {
             findViewById(i).setClickable(false);
             findViewById(i).setLongClickable(false);
-            if(board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
+            if (board.nodes[i].nodeContains == Node.NodeContains.BOMB) {
                 GraphicsHandler.SetTextureToFlag(findViewById(i), board.nodes[i]);
             }
         }
@@ -384,8 +376,6 @@ public class GameActivity extends Activity {
         gameTimer.PauseTimer();
         //enterscoredatabase(gameTimer.getTime());
     }
-
-
 
 
     //function to display the boom sound

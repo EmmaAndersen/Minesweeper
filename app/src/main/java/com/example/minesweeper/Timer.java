@@ -12,6 +12,10 @@ import android.widget.Chronometer;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Timer extends AppCompatActivity {
 
     boolean timerIsRunning;
@@ -19,6 +23,14 @@ public class Timer extends AppCompatActivity {
     private long pauseOffset;  //To calculate the time difference from when we started the chronometer and until it is paused.
     public int time;
     public String timeString;
+
+    long timeTotal;
+    int hour;
+    int minute;
+    int second;
+    String hh;
+    String mm;
+    String ss;
 
     String timerValue;  //not used yet, thinking of using this as the variable to store the time in the database (for high score)
 
@@ -28,9 +40,18 @@ public class Timer extends AppCompatActivity {
         //setContentView(R.layout.activity_main);
     }
 
-    public int getTime(){
+    public String getTime(){
         time = (int)chronometer.getBase();
-        return time;
+        long myTime = chronometer.getBase();
+        //Date currentDate = new Date(myTime);
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+        return dateFormat.format(myTime);
+    }
+
+    public String displayedTime(){
+        String myTime = hh + ":" + mm + ":" + ss;
+        return myTime;
     }
 
     public String getFormat(){
