@@ -290,6 +290,7 @@ public class GameActivity extends Activity {
         gameOverAlert.setTitle("GAME OVER");
         gameOverAlert.setCustomTitle(dialogTextView);
         gameOverAlert.setCancelable(false);
+        gameTimer.PauseTimer();
         gameOverAlert.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -297,6 +298,7 @@ public class GameActivity extends Activity {
                 finish();
                 startActivity(retryIntent);
                 dialog.cancel();
+                gameTimer.ResetTimer();
                 //Toast.makeText(getApplicationContext(), "Yes clicked", Toast.LENGTH_SHORT).show();
             }
         });
@@ -308,6 +310,7 @@ public class GameActivity extends Activity {
                 //finish();
                 startActivity(mainIntent);
                 dialog.cancel();
+                gameTimer.ResetTimer();
                 //Toast.makeText(getApplicationContext(), "No clicked", Toast.LENGTH_SHORT).show();
             }
         });
