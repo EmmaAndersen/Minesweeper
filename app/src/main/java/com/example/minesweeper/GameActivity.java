@@ -65,11 +65,12 @@ public class GameActivity extends Activity {
         params.width = width * 256;
         params.height = height * 256;
         constraintLayout.setLayoutParams(params);
+
         myGameThread();
         //populateNodeList();
         gameTimer = new Timer();
         gameTimer.chronometer = findViewById(R.id.chronometerID);
-        popupDialog = new PopUpDialog(this);
+
 
         dialogTextView = new TextView(getBaseContext());
     }
@@ -106,6 +107,8 @@ public class GameActivity extends Activity {
             }
         });
     }
+
+
 
     /**
      * <h1>Creates ImageButtons and sets their attributes according to the created board </h1>
@@ -157,7 +160,9 @@ public class GameActivity extends Activity {
                     if (board.emptyNodesLeft == 0)
                     {
                         WinGame();
+                        popupDialog = new PopUpDialog(GameActivity.this);
                         popupDialog.showPopUp();
+                        popupDialog.setListerners();
                     }
                 }
             });

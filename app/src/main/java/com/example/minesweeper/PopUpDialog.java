@@ -3,9 +3,11 @@ package com.example.minesweeper;
 import android.app.Activity;
 import android.app.Dialog;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -23,8 +25,8 @@ public class PopUpDialog {
     private Dialog dialog;
     private Activity activity;
 
-    public PopUpDialog(Activity _activity){
-        this.activity = _activity;
+    public PopUpDialog(Activity activity){
+        this.activity = activity;
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.win_popup);
@@ -34,13 +36,6 @@ public class PopUpDialog {
         textView_enterScore = dialog.findViewById(R.id.txtView_enterHighScore);
         editText_name = dialog.findViewById(R.id.edt_name);
         textView_submit = dialog.findViewById(R.id.txt_submit);
-
-        //initPopUp();
-    }
-
-    public void initPopUp(){
-
-        Log.d("popup test", activity.toString());
     }
 
     public void showPopUp(){
@@ -49,6 +44,15 @@ public class PopUpDialog {
 
     public void dismissPopUp(){
         dialog.dismiss();
+    }
+
+    public void setListerners(){
+        textView_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Thanks", activity.toString());
+            }
+        });
     }
 
 
