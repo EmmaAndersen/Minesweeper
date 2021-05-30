@@ -21,8 +21,6 @@ public class Node {
     private DatabaseReference databaseReference;
     int i;
 
-    Timer timer;
-
     public Edge[] edges;
 
     /**
