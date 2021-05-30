@@ -96,20 +96,15 @@ public class PopUpDialog {
         //Enter the name of the player and is score
         if (difficulityLevel == 0) {
             databaseReference = fireBaseRootNode.getReference("easy/" + editText_name.getText().toString());//database.getReference("message/java/user"+i+"/score");
-            /*seconds = (int) (((timer.getTime() / 1000) / 60) / 60) / 60;
-            minutes = (int) ((((timer.getTime() / 1000) / 60) / 60) / 60) / 60;
-            seconds = seconds - (minutes * 60);
-            String totalTimeScore = "" + minutes + ": " + seconds;*/
-
-            databaseReference.setValue("" + timer.getTime());//""+timer.getTime());
+            databaseReference.setValue("" +  timer.chronometer.getText());//""+timer.getTime());
         } else if (difficulityLevel == 1) {
             databaseReference = fireBaseRootNode.getReference("intermediate/" + editText_name.getText().toString());//database.getReference("message/java/user"+i+"/score");
-            databaseReference.setValue("" + timer.getTime());//""+timer.getTime());
+            databaseReference.setValue("" + timer.chronometer.getText());//""+timer.getTime());
         } else if (difficulityLevel == 2) {
             databaseReference = fireBaseRootNode.getReference("hard/" + editText_name.getText().toString());//database.getReference("message/java/user"+i+"/score");
-            databaseReference.setValue("" + timer.getTime());//""+timer.getTime());
+            databaseReference.setValue("" + timer.chronometer.getText());//""+timer.getTime());
         } else {
-            Log.d("catch high score error", String.valueOf(timer.getTime()));
+            Log.d("catch high score error", String.valueOf(timer.chronometer.getText()));
         }
         //We add the new player to the total of player
         //databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
@@ -121,8 +116,8 @@ public class PopUpDialog {
             @Override
             public void onClick(View v) {
                 Log.d("Thanks", activity.toString());
-                timer.ResetTimer();
                 enterscoredatabase(timer, difficultyLevel);
+                timer.ResetTimer();
             }
         });
     }
