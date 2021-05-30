@@ -17,19 +17,19 @@ public class AdapterScore extends RecyclerView.Adapter<AdapterScore.ViewHolder> 
 
     private String[] name;
     private String[] score;
-    public AdapterScore(List<String> n, int[] minuteArray, int[] secondArray, List<String> s){
+    public AdapterScore(List<String> n, List<String> minuteArray, List<String> secondArray, List<String> s){
 
         name= new String[n.size()];
-        score= new String[s.size()];
+        score= new String[secondArray.size()];
         for(int i=0; i<n.size(); i++)
         {
             name[i] = n.get(i);
-            score[i] = minuteArray[i] + ":" + secondArray[i];
+            score[i] = secondArray.get(i);
         }
-        for(int i=0; i< name.length;i++)
+        /*for(int i=0; i< name.length;i++)
         {
             Log.d(name[i],score[i]);
-        }
+        }*/
     }
     @NonNull
     @Override

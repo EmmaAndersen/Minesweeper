@@ -34,10 +34,59 @@ public class Intermediate_fragment extends Fragment {
     private List<String> name;
     private List<String> score;
 
-    int[] myIntegerMinute;
-    int[] myIntegerSeconde;
+    List<Integer> myIntegerMinute;
+    List<Integer> myIntegerSeconde;
+    int max = 0;
+    List<String> copyname;
+
+    List<String> sortscore;
+    List<String> sortname;
+    int dot;
 
     public Intermediate_fragment() {
+    }
+
+    private void Sorting() {
+        copyname = new ArrayList<>();
+        copyname = name;
+        sortscore = new ArrayList<>();
+        sortname = new ArrayList<>();
+
+        myIntegerMinute = new ArrayList<>();
+        myIntegerSeconde = new ArrayList<>();
+
+
+        while (sortscore.size() < score.size() - 1) {
+            for (int i = 1; i < score.size(); i++) {
+
+                dot = score.get(i).indexOf(':');
+                if (Integer.parseInt(score.get(i).substring(0, dot - 1)) < Integer.parseInt(score.get(i - 1).substring(0, dot - 1))) {
+                    max = i;
+                }
+                if (Integer.parseInt(score.get(i).substring(0, dot - 1)) == Integer.parseInt(score.get(i - 1).substring(0, dot - 1))) {
+
+                    int deb = Integer.parseInt(score.get(i).substring(dot + 1, score.get(i).length()));
+                    int end = Integer.parseInt(score.get(i - 1).substring(dot + 1, score.get(i - 1).length()));
+
+                    if (deb < end) {
+                        max = i;
+                    }
+                }
+            }
+
+            sortscore.add(Integer.parseInt(score.get(max).substring(0, dot - 1)) + ":" + Integer.parseInt(score.get(max).substring(dot + 1, score.get(max).length())));
+            score.remove(max); // or remove
+            //myIntegerMinute.remove(max); // or remove
+            sortname.add(copyname.get(max));
+            copyname.remove(max);
+
+        }
+
+        sortscore.add(Integer.parseInt(score.get(max).substring(0, dot - 1)) + ":" + Integer.parseInt(score.get(max).substring(dot + 1, score.get(max).length())));
+        score.remove(max); // or remove
+        //myIntegerMinute.remove(max); // or remove
+        sortname.add(copyname.get(max));
+        copyname.remove(max);
     }
 
     @Nullable
@@ -70,11 +119,13 @@ public class Intermediate_fragment extends Fragment {
                         score.add(""+result.getValue(String.class));
                     }
 
-                    recycler=view.findViewById(R.id.Rintermediate);
-                    AdapterScore adapter = new AdapterScore(name,myIntegerMinute, myIntegerSeconde, score);
+                    //Sorting();
+
+                    /*recycler=view.findViewById(R.id.Rintermediate);
+                    AdapterScore adapter = new AdapterScore(sortname, name, sortscore, score);
                     recycler.setAdapter(adapter);
                     recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recycler.setItemAnimator(new DefaultItemAnimator());
+                    recycler.setItemAnimator(new DefaultItemAnimator());*/
 
                 }
 
@@ -92,11 +143,11 @@ public class Intermediate_fragment extends Fragment {
 
     }
 
-    private void sortHighScoreStrings() {
-       /* String[] myStringArray = new String[score.size()];
+   /* private void sortHighScoreStrings() {
+       *//* String[] myStringArray = new String[score.size()];
         for (int i = 0; i < score.size(); i++) {
             myStringArray[i] = score.get(i);
-        }*/
+        }*//*
         //int[] myintegerArray = new int[myStringArray.length];
         myIntegerMinute = new int[score.size()];
         myIntegerSeconde = new int[score.size()];
@@ -106,15 +157,15 @@ public class Intermediate_fragment extends Fragment {
             myIntegerMinute[i] = Integer.parseInt(score.get(i).substring(0, dot - 1));
             myIntegerSeconde[i] = Integer.parseInt(score.get(i).substring(dot + 1, score.get(i).length()));
         }
-        /*for (int i = 0; i < myStringArray.length; i++) {
+        *//*for (int i = 0; i < myStringArray.length; i++) {
             myintegerArray[i] = Integer.parseInt(myStringArray[i]);
-        }*/
+        }*//*
         Arrays.sort(myIntegerSeconde);
         Arrays.sort(myIntegerMinute);
         Log.d("secondsA", Arrays.toString(myIntegerSeconde));
         Log.d("secondsM", Arrays.toString(myIntegerMinute));
     }
-
+*/
 
 
 }
