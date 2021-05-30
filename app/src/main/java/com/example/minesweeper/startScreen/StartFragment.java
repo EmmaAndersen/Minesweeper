@@ -107,9 +107,9 @@ public class StartFragment extends Fragment
         public void onClick(View v) {
             CharSequence quit = "You pressed quit";
 
-                // Activity.finish();
-                //System.exit(0);
-                Toast.makeText(getActivity().getApplicationContext(), quit, Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+                System.exit(0);
+                //Toast.makeText(getActivity().getApplicationContext(), quit, Toast.LENGTH_SHORT).show();
         }
 
     };
