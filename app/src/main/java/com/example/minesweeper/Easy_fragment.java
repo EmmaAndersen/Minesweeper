@@ -35,6 +35,7 @@ public class Easy_fragment extends Fragment {
     private DatabaseReference databaseReference;
     private List<String> name;
     private List<String> score;
+    private AdapterScore adapterScore;
     List<Integer> myIntegerMinute;
     List<Integer> myIntegerSeconde;
     int max = 0;
@@ -42,48 +43,52 @@ public class Easy_fragment extends Fragment {
 
     List<String> sortscore;
     List<String> sortname;
-    int dot;
+    int dot, dot2, dot3;
 
     public Easy_fragment() {
+
     }
 
     private void Sorting() {
-        while (sortscore.size() < score.size() - 1) {
+        Log.d("whileLog", String.valueOf(sortscore.size()));
+        while (sortscore.size() < score.size() -1) {
+
             for (int i = 1; i < score.size(); i++) {
                 dot = score.get(i).indexOf(':');
-                /*if (Integer.parseInt(score.get(i).substring(0, dot - 1)) < Integer.parseInt(score.get(i - 1).substring(0, dot - 1))) {
+                if (Integer.parseInt(score.get(i).substring(0, dot - 1)) <= Integer.parseInt(score.get(i - 1).substring(0, dot - 1))) {
                     max = i;
-                }*/
-                //if (Integer.parseInt(score.get(i).substring(0, dot - 1)) == Integer.parseInt(score.get(i - 1).substring(0, dot - 1))) {
+                }
+                if (Integer.parseInt(score.get(i).substring(0, dot - 1)) == Integer.parseInt(score.get(i - 1).substring(0, dot - 1))) {
 
                     int deb = Integer.parseInt(score.get(i).substring(dot + 1, score.get(i).length()));
                     int end = Integer.parseInt(score.get(i - 1).substring(dot + 1, score.get(i - 1).length()));
-
+                    Log.d("thisLog", deb + ": " + end);
                     if (deb < end) {
                         max = i;
-                        if(i == score.size() -1){
+                        /*if(i == score.size() -1){
                             dot = score.get(max).indexOf(':');
                             sortscore.add(Integer.parseInt(score.get(max).substring(0, dot - 1)) + ":" + Integer.parseInt(score.get(max).substring(dot + 1, score.get(max).length())));
                             score.remove(max); // or remove
                             //myIntegerMinute.remove(max); // or remove
                             sortname.add(copyname.get(max));
                             copyname.remove(max);
-                        }
+                        }*/
+
                     }
-                //}
+                }
             }
 
-          /*  dot = score.get(max).indexOf(':');
+            dot = score.get(max).indexOf(':');
             sortscore.add(Integer.parseInt(score.get(max).substring(0, dot - 1)) + ":" + Integer.parseInt(score.get(max).substring(dot + 1, score.get(max).length())));
             score.remove(max); // or remove
             //myIntegerMinute.remove(max); // or remove
             sortname.add(copyname.get(max));
-            copyname.remove(max);*/
+            copyname.remove(max);
 
         }
 
         dot = score.get(0).indexOf(':');
-        sortscore.add(Integer.parseInt(score.get(0).substring(0, dot - 1)) + ":" + Integer.parseInt(score.get(0).substring(dot + 1, score.get(0).length())));
+        sortscore.add(Integer.parseInt(score.get(0).substring(0, dot3 - 1)) + ":" + Integer.parseInt(score.get(0).substring(dot + 1, score.get(0).length())));
         score.remove(0); // or remove
         //myIntegerMinute.remove(max); // or remove
         sortname.add(copyname.get(0));
@@ -126,23 +131,15 @@ public class Easy_fragment extends Fragment {
                     // whenever data at this location is updated.
 
                     for (DataSnapshot result : dataSnapshot.getChildren()) {
+
                         name.add(result.getKey() + ": ");
-                    /*Collections.sort(result, new Comparator<T>() {
-                        @Override
-                        public int compare(long o1, long o2) {
-                            return
-                        }
-                    });*/
-
-
                         score.add("" + result.getValue(String.class));
-                        Sorting();
 
+                        Log.d("resultLog", String.valueOf(result.getChildrenCount()));
 
                         //sortHighScoreStrings();
                     }
-
-
+                    Sorting();
                     recycler = view.findViewById(R.id.Reasy);
 
                     AdapterScore adapter = new AdapterScore(sortname, name, sortscore, score);

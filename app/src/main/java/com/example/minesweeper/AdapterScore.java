@@ -48,6 +48,8 @@ public class AdapterScore extends RecyclerView.Adapter<AdapterScore.ViewHolder> 
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return name.length;
