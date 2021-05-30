@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Hard_fragment extends Fragment {
@@ -30,6 +31,9 @@ public class Hard_fragment extends Fragment {
     private DatabaseReference databaseReference;
     private List<String> name;
     private List<String> score;
+
+    int[] myIntegerMinute;
+    int[] myIntegerSeconde;
 
 
     public Hard_fragment() {
@@ -67,7 +71,7 @@ public class Hard_fragment extends Fragment {
 
 
                     recycler=view.findViewById(R.id.Rhard);
-                    AdapterScore adapter = new AdapterScore(name,score);
+                    AdapterScore adapter = new AdapterScore(name, myIntegerMinute, myIntegerSeconde, score);
                     recycler.setAdapter(adapter);
                     recycler.setLayoutManager(new LinearLayoutManager(getContext()));
                     recycler.setItemAnimator(new DefaultItemAnimator());
@@ -86,6 +90,29 @@ public class Hard_fragment extends Fragment {
         }
 
 
+    }
+
+    private void sortHighScoreStrings() {
+       /* String[] myStringArray = new String[score.size()];
+        for (int i = 0; i < score.size(); i++) {
+            myStringArray[i] = score.get(i);
+        }*/
+        //int[] myintegerArray = new int[myStringArray.length];
+        myIntegerMinute = new int[score.size()];
+        myIntegerSeconde = new int[score.size()];
+        for (int i = 0; i < score.size(); i++)
+        {
+            int dot = score.get(i).indexOf(':');
+            myIntegerMinute[i] = Integer.parseInt(score.get(i).substring(0, dot - 1));
+            myIntegerSeconde[i] = Integer.parseInt(score.get(i).substring(dot + 1, score.get(i).length()));
+        }
+        /*for (int i = 0; i < myStringArray.length; i++) {
+            myintegerArray[i] = Integer.parseInt(myStringArray[i]);
+        }*/
+        Arrays.sort(myIntegerSeconde);
+        Arrays.sort(myIntegerMinute);
+        Log.d("secondsA", Arrays.toString(myIntegerSeconde));
+        Log.d("secondsM", Arrays.toString(myIntegerMinute));
     }
 
 

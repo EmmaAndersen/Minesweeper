@@ -74,7 +74,7 @@ public class PopUpDialog {
     //put score in database
     public void enterscoredatabase(Timer timer, int difficulityLevel) {
         fireBaseRootNode = FirebaseDatabase.getInstance();
-        databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
+        /*databaseReference = fireBaseRootNode.getReference();//database.getReference("Numberofuser");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,7 +90,7 @@ public class PopUpDialog {
                 // Failed to read value
                 Log.w("TAG", "Failed to read value.", error.toException());
             }
-        });
+        });*/
 
 
         //Enter the name of the player and is score
