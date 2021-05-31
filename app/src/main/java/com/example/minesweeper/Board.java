@@ -1,6 +1,8 @@
 package com.example.minesweeper;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,6 +34,7 @@ public class Board {
     //keeps track of how many nodes have been flagged
     public int flaggedNodes =0;
 
+
     public Board(int countX, int countY, int countBomb) {
         gridX = countX;
         gridY = countY;
@@ -42,7 +45,9 @@ public class Board {
         PopulateBoard();
         PopulateBombs();
         PopulateNumbers();
+
     }
+
 
     /**
      * <h1>Creates the Nodes that make up the game board.</h1>

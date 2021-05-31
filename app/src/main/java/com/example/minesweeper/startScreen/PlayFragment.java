@@ -31,7 +31,6 @@ public class PlayFragment extends Fragment
     Button easyButton;
     Button intermediateButton;
     Button hardButton;
-    Button customButton;
     Button backButton;
     private View view;
     private MediaPlayer mediaPlayer;
@@ -67,9 +66,6 @@ public class PlayFragment extends Fragment
 
         hardButton = view.findViewById(R.id.hard_button);
         hardButton.setOnClickListener(buttonListenerHard);
-
-        customButton = view.findViewById(R.id.cusom_button);
-        customButton.setOnClickListener(buttonListenerCustom);
 
         backButton = view.findViewById(R.id.back_button);
         backButton.setOnClickListener(buttonListenerBack);
@@ -147,16 +143,7 @@ public class PlayFragment extends Fragment
 
     };
 
-    private View.OnClickListener buttonListenerCustom = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
 
-            CharSequence  custom = "You chose the custommode";
-
-                Toast.makeText(getActivity().getApplicationContext(), custom, Toast.LENGTH_SHORT).show();
-        }
-
-    };
 
 
    //function to display the bling sound

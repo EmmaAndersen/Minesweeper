@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -51,7 +52,8 @@ public class GameActivity extends Activity {
     private Timer gameTimer;
     int difficulityLevel = -1;
     PopUpDialog popupDialog;
-
+    ImageView flagView;
+    TextView bombView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +71,12 @@ public class GameActivity extends Activity {
         constraintLayout.setLayoutParams(params);
 
         myGameThread();
-        //populateNodeList();
+        flagView = findViewById(R.id.flagView);
+        flagView.setImageResource(R.drawable.flag);
+        bombView = findViewById(R.id.nbr_bomb);
         gameTimer = new Timer();
         gameTimer.chronometer = findViewById(R.id.chronometerID);
+        bombView.setText(String.valueOf(bombCount));
 
         gameTimer.StartTimer();
         popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ", "Submit your sore", "SUBMIT", difficulityLevel, this);
@@ -79,6 +84,9 @@ public class GameActivity extends Activity {
         dialogTextView = new TextView(getBaseContext());
     }
 
+    public void bombCounter(){
+
+    }
     /**
      * <h1>Used to find view by ID outside of activity </h1>
      *
@@ -304,7 +312,7 @@ public class GameActivity extends Activity {
                 startActivity(retryIntent);
                 dialog.cancel();
                 gameTimer.ResetTimer();
-                //Toast.makeText(getApplicationContext(), "Yes clicked", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -312,11 +320,11 @@ public class GameActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent mainIntent = new Intent(GameActivity.this, MainActivity.class);
-                //finish();
+
                 startActivity(mainIntent);
                 dialog.cancel();
                 gameTimer.ResetTimer();
-                //Toast.makeText(getApplicationContext(), "No clicked", Toast.LENGTH_SHORT).show();
+
             }
         });
         gameOverAlert.show();
