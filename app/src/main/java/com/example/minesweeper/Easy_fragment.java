@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author Cassandra Chedjou & Emma-sophie Andersen
+ * */
 public class Easy_fragment extends Fragment {
 
     private View view;
@@ -36,65 +40,12 @@ public class Easy_fragment extends Fragment {
     private List<String> name;
     private List<String> score;
     private AdapterScore adapterScore;
-    List<Integer> myIntegerMinute;
-    List<Integer> myIntegerSeconde;
+    int[] myIntegerMinute;
+    int[] myIntegerSeconde;
     int max = 0;
-    List<String> copyname;
-
-    List<String> sortscore;
-    List<String> sortname;
-    int dot, dot2, dot3;
 
     public Easy_fragment() {
 
-    }
-
-    private void Sorting() {
-        Log.d("whileLog", String.valueOf(sortscore.size()));
-        while (sortscore.size() < score.size() -1) {
-
-            for (int i = 1; i < score.size(); i++) {
-                dot = score.get(i).indexOf(':');
-                if (Integer.parseInt(score.get(i).substring(0, dot - 1)) <= Integer.parseInt(score.get(i - 1).substring(0, dot - 1))) {
-                    max = i;
-                }
-                if (Integer.parseInt(score.get(i).substring(0, dot - 1)) == Integer.parseInt(score.get(i - 1).substring(0, dot - 1))) {
-
-                    int deb = Integer.parseInt(score.get(i).substring(dot + 1, score.get(i).length()));
-                    int end = Integer.parseInt(score.get(i - 1).substring(dot + 1, score.get(i - 1).length()));
-                    Log.d("thisLog", deb + ": " + end);
-                    if (deb < end) {
-                        max = i;
-                        /*if(i == score.size() -1){
-                            dot = score.get(max).indexOf(':');
-                            sortscore.add(Integer.parseInt(score.get(max).substring(0, dot - 1)) + ":" + Integer.parseInt(score.get(max).substring(dot + 1, score.get(max).length())));
-                            score.remove(max); // or remove
-                            //myIntegerMinute.remove(max); // or remove
-                            sortname.add(copyname.get(max));
-                            copyname.remove(max);
-                        }*/
-
-                    }
-                }
-            }
-
-            dot = score.get(max).indexOf(':');
-            sortscore.add(Integer.parseInt(score.get(max).substring(0, dot - 1)) + ":" + Integer.parseInt(score.get(max).substring(dot + 1, score.get(max).length())));
-            score.remove(max); // or remove
-            //myIntegerMinute.remove(max); // or remove
-            sortname.add(copyname.get(max));
-            copyname.remove(max);
-
-        }
-
-        dot = score.get(0).indexOf(':');
-        sortscore.add(Integer.parseInt(score.get(0).substring(0, dot3 - 1)) + ":" + Integer.parseInt(score.get(0).substring(dot + 1, score.get(0).length())));
-        score.remove(0); // or remove
-        //myIntegerMinute.remove(max); // or remove
-        sortname.add(copyname.get(0));
-        copyname.remove(0);
-
-        Log.d("myLog", sortname + ": " + sortscore);
     }
 
     @Nullable
@@ -104,14 +55,6 @@ public class Easy_fragment extends Fragment {
 
         name = new ArrayList<String>();
         score = new ArrayList<String>();
-        copyname = new ArrayList<>();
-        copyname = name;
-        sortscore = new ArrayList<>();
-        sortname = new ArrayList<>();
-
-        myIntegerMinute = new ArrayList<>();
-        myIntegerSeconde = new ArrayList<>();
-
 
         dataeasy();
 
@@ -135,19 +78,13 @@ public class Easy_fragment extends Fragment {
                         name.add(result.getKey() + ": ");
                         score.add("" + result.getValue(String.class));
 
-                        Log.d("resultLog", String.valueOf(result.getChildrenCount()));
-
-                        //sortHighScoreStrings();
                     }
-                    Sorting();
                     recycler = view.findViewById(R.id.Reasy);
 
-                    AdapterScore adapter = new AdapterScore(sortname, name, sortscore, score);
+                    AdapterScore adapter = new AdapterScore(name, score, findBestScore());
                     recycler.setAdapter(adapter);
                     recycler.setLayoutManager(new LinearLayoutManager(getContext()));
                     recycler.setItemAnimator(new DefaultItemAnimator());
-
-                    //databaseReference.orderByValue().limitToLast(5);
 
                 }
 
@@ -162,26 +99,31 @@ public class Easy_fragment extends Fragment {
         }
     }
 
-    private void sortHighScoreStrings() {
-       /* String[] myStringArray = new String[score.size()];
-        for (int i = 0; i < score.size(); i++) {
-            myStringArray[i] = score.get(i);
-        }*/
-        //int[] myintegerArray = new int[myStringArray.length];
-  /*      myIntegerMinute = new int[score.size()];
+    private int findBestScore() {
+        int maxValue = 0;
+        myIntegerMinute = new int[score.size()];
         myIntegerSeconde = new int[score.size()];
-        for (int i = 0; i < score.size(); i++) {
-            int dot = score.get(i).indexOf(':');
-            myIntegerMinute[i] = Integer.parseInt(score.get(i).substring(0, dot - 1));
-            myIntegerSeconde[i] = Integer.parseInt(score.get(i).substring(dot + 1, score.get(i).length()));
-        }
-        *//*for (int i = 0; i < myStringArray.length; i++) {
-            myintegerArray[i] = Integer.parseInt(myStringArray[i]);
-        }*//*
-        Arrays.sort(myIntegerSeconde);
-        Arrays.sort(myIntegerMinute);
-        Log.d("secondsA", Arrays.toString(myIntegerSeconde));
-        Log.d("secondsM", Arrays.toString(myIntegerMinute));*/
-    }
+        for (int j = 0; j < score.size(); j++) {
 
+            int dot = score.get(j).indexOf(':');
+            myIntegerMinute[j] = Integer.parseInt(score.get(j).substring(0, dot - 1));
+            myIntegerSeconde[j] = Integer.parseInt(score.get(j).substring(dot + 1, score.get(j).length()));
+        }
+
+        for (int i = 0; i < score.size() - 1; i++) {
+
+            if ((myIntegerMinute[maxValue]) > (myIntegerMinute[i])) {
+                maxValue = i;
+            }
+            if ((myIntegerMinute[maxValue]) == (myIntegerMinute[i])) {
+
+                if ((myIntegerSeconde[maxValue]) >= (myIntegerSeconde[i])) {
+                    Log.d("newLog", String.valueOf(myIntegerSeconde[maxValue]) + ": " + String.valueOf(myIntegerSeconde[i]));
+                    maxValue = i;
+                    Log.d("compareLog", score.get(i) + "name: " + String.valueOf(maxValue));
+                }
+            }
+        }
+        return maxValue;
+    }
 }
