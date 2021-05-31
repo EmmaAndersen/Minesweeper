@@ -183,10 +183,11 @@ public class GameActivity extends Activity {
                 @Override
                 public boolean onLongClick(View view) {
                     if (node.ToggleFlag(button)) {
-                        board.flaggedNodes++;
-                    } else {
                         board.flaggedNodes--;
+                    } else {
+                        board.flaggedNodes++;
                     }
+                    bombView.setText(String.valueOf(board.flaggedNodes));
                     //return true to not carry this event further!
                     return true;
                 }

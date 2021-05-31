@@ -39,6 +39,7 @@ public class Board {
         gridX = countX;
         gridY = countY;
         bombCount = countBomb;
+        flaggedNodes = bombCount;
         random = new Random();
         bombNodes = new Node[bombCount];
         emptyNodesLeft = (gridX * gridY) - bombCount;
