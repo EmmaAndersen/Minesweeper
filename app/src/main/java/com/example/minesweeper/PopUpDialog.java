@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class PopUpDialog {
     private TextView textView_enterScore;
     private EditText editText_name;
     private TextView textView_submit;
+    private TextView textView_time;
     private Dialog dialog;
     private Activity activity;
     private Timer timer;
@@ -40,7 +42,7 @@ public class PopUpDialog {
     private int seconds, minutes;
     GameActivity gameActivity;
 
-    public PopUpDialog(Activity activity, Timer timer, String titleText, String bodyText, String enterText, String submitText, int difficultyLevel, GameActivity gameActivity) {
+    public PopUpDialog(Activity activity, Timer timer, String titleText, String bodyText, String displayTime , String enterText, String submitText, int difficultyLevel, GameActivity gameActivity) {
         this.activity = activity;
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -51,10 +53,11 @@ public class PopUpDialog {
         textView_enterScore = dialog.findViewById(R.id.txtView_enterHighScore);
         editText_name = dialog.findViewById(R.id.edt_name);
         textView_submit = dialog.findViewById(R.id.txt_submit);
+        textView_time = dialog.findViewById(R.id.time_view);
         this.timer = timer;
         this.difficultyLevel = difficultyLevel;
 
-        setPopUpData(titleText, bodyText, enterText, submitText);
+        setPopUpData(titleText, bodyText, enterText, submitText, displayTime);
         this.gameActivity = gameActivity;
 
         Log.d("popup", textView_title.toString());
@@ -68,11 +71,13 @@ public class PopUpDialog {
         dialog.dismiss();
     }
 
-    private void setPopUpData(String titleText, String bodyText, String enterText, String submitText) {
+    private void setPopUpData(String titleText, String bodyText, String enterText, String submitText, String displayTime) {
         textView_title.setText(titleText);
         textView_body.setText(bodyText);
         textView_enterScore.setText(enterText);
         textView_submit.setText(submitText);
+        textView_time.setText(displayTime);
+        //textView_time.setText(timerText);
     }
 
     //put score in database

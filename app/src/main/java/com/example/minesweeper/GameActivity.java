@@ -54,6 +54,7 @@ public class GameActivity extends Activity {
     PopUpDialog popupDialog;
     ImageView flagView;
     TextView bombView;
+    //TextView endTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,19 +75,17 @@ public class GameActivity extends Activity {
         flagView = findViewById(R.id.flagView);
         flagView.setImageResource(R.drawable.flag);
         bombView = findViewById(R.id.nbr_bomb);
+        //endTimer = findViewById(R.id.time_view);
         gameTimer = new Timer();
         gameTimer.chronometer = findViewById(R.id.chronometerID);
         bombView.setText(String.valueOf(bombCount));
-
+            //gameTimer.chronometer = findViewById(R.id.time_view);
         gameTimer.StartTimer();
-        popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ", "Submit your sore", "SUBMIT", difficulityLevel, this);
+
 
         dialogTextView = new TextView(getBaseContext());
     }
 
-    public void bombCounter(){
-
-    }
     /**
      * <h1>Used to find view by ID outside of activity </h1>
      *
@@ -379,6 +378,7 @@ public class GameActivity extends Activity {
     private void WinGame() {
         Log.d("WinGame", "GG");//Win game
         //disables all buttons
+
         for (int i = 0; i < board.nodes.length; i++) {
             findViewById(i).setClickable(false);
             findViewById(i).setLongClickable(false);
@@ -388,6 +388,8 @@ public class GameActivity extends Activity {
         }
 
         gameTimer.PauseTimer();
+        popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ",gameTimer.chronometer.getText().toString() ,  "Submit your score", "SUBMIT", difficulityLevel, this);
+       // endTimer.setText(gameTimer.chronometer.getText());
         //enterscoredatabase(gameTimer.getTime());
     }
 

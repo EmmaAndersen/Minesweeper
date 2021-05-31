@@ -122,8 +122,8 @@ public class PlayFragment extends Fragment
         public void onClick(View v) {
 
             Intent intent = new Intent(getActivity(),GameActivity.class);
-            intent.putExtra("width",16);
-            intent.putExtra("height",30);
+            intent.putExtra("width",30);
+            intent.putExtra("height",16);
             intent.putExtra("bombCount",99);
             intent.putExtra("difficulityLevel",2);
             if(intent != null)

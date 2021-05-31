@@ -39,6 +39,12 @@ public class Timer extends AppCompatActivity {
         }
     }
 
+    public void DisplayTime(){
+      //  String temp = (String)chronometer.stop();
+        chronometer.stop();
+
+    }
+
     public void ResetTimer() {
         chronometer.setBase(SystemClock.elapsedRealtime()); //Sets back to 0.
         pauseOffset = 0;
