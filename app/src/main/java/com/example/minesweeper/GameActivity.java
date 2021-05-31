@@ -74,7 +74,7 @@ public class GameActivity extends Activity {
         gameTimer.chronometer = findViewById(R.id.chronometerID);
 
         gameTimer.StartTimer();
-        popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ", "Submit your sore", "SUBMIT", difficulityLevel);
+        popupDialog = new PopUpDialog(GameActivity.this, gameTimer, "YOU WON", "Your time: ", "Submit your sore", "SUBMIT", difficulityLevel, this);
 
         dialogTextView = new TextView(getBaseContext());
     }
@@ -320,6 +320,11 @@ public class GameActivity extends Activity {
             }
         });
         gameOverAlert.show();
+    }
+
+    public void goBackToMainMenu(){
+        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     /**

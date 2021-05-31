@@ -2,12 +2,14 @@ package com.example.minesweeper;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.minesweeper.startScreen.PlayFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,8 +38,9 @@ public class PopUpDialog {
     int difficultyLevel;
 
     private int seconds, minutes;
+    GameActivity gameActivity;
 
-    public PopUpDialog(Activity activity, Timer timer, String titleText, String bodyText, String enterText, String submitText, int difficultyLevel) {
+    public PopUpDialog(Activity activity, Timer timer, String titleText, String bodyText, String enterText, String submitText, int difficultyLevel, GameActivity gameActivity) {
         this.activity = activity;
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -52,6 +55,7 @@ public class PopUpDialog {
         this.difficultyLevel = difficultyLevel;
 
         setPopUpData(titleText, bodyText, enterText, submitText);
+        this.gameActivity = gameActivity;
 
         Log.d("popup", textView_title.toString());
     }
@@ -118,6 +122,7 @@ public class PopUpDialog {
                 Log.d("Thanks", activity.toString());
                 enterscoredatabase(timer, difficultyLevel);
                 timer.ResetTimer();
+                gameActivity.goBackToMainMenu();
             }
         });
     }
