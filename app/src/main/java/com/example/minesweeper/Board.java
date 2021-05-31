@@ -49,7 +49,6 @@ public class Board {
 
     }
 
-
     /**
      * <h1>Creates the Nodes that make up the game board.</h1>
      *

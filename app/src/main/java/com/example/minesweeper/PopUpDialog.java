@@ -83,24 +83,6 @@ public class PopUpDialog {
     //put score in database
     public void enterscoredatabase(Timer timer, int difficulityLevel) {
         fireBaseRootNode = FirebaseDatabase.getInstance();
-        /*databaseReference = fireBaseRootNode.getReference();//database.getReference("Numberofuser");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                i = Integer.parseInt(value);
-                Log.d("TAG", "Value of user is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("TAG", "Failed to read value.", error.toException());
-            }
-        });*/
-
 
         //Enter the name of the player and is score
         if (difficulityLevel == 0) {
@@ -115,9 +97,6 @@ public class PopUpDialog {
         } else {
             Log.d("catch high score error", String.valueOf(timer.chronometer.getText()));
         }
-        //We add the new player to the total of player
-        //databaseReference = fireBaseRootNode.getReference("Numberofuser");//database.getReference("Numberofuser");
-        //databaseReference.setValue("" + (i + 1));
     }
 
     public void setListeners() {

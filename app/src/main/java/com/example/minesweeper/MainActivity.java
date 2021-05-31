@@ -20,6 +20,9 @@ import android.widget.LinearLayout;
 import com.example.minesweeper.startScreen.MenuManager;
 import com.example.minesweeper.startScreen.StartFragment;
 
+/**
+ * @author Jenny Johannesson
+ * */
 public class MainActivity extends AppCompatActivity {
 
     public static FragmentManager fragmentManager;

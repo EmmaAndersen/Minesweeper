@@ -95,9 +95,7 @@ public class PlayFragment extends Fragment
                 Log.d("HEJSAN1" , String.valueOf(getActivity()));
 
             }
-
         }
-
     };
     private View.OnClickListener buttonListenerIntermediate = new View.OnClickListener(){
         @Override
@@ -115,7 +113,6 @@ public class PlayFragment extends Fragment
 
             }
         }
-
     };
     private View.OnClickListener buttonListenerHard = new View.OnClickListener(){
         @Override
@@ -140,11 +137,7 @@ public class PlayFragment extends Fragment
 
                 MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().startFragment, null ).commit();
         }
-
     };
-
-
-
 
    //function to display the bling sound
         public void blingsound(){
@@ -161,7 +154,6 @@ public class PlayFragment extends Fragment
                 }
             });
             mediaPlayer.start();
-
         }
 
     @Override

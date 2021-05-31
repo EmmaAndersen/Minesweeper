@@ -10,6 +10,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
+/**
+ * @author Emma-sophie Andersen
+ * */
 public class HighScoreActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
