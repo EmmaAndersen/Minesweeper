@@ -109,7 +109,7 @@ public class StartFragment extends Fragment
 
                 getActivity().finish();
                 System.exit(0);
-                //Toast.makeText(getActivity().getApplicationContext(), quit, Toast.LENGTH_SHORT).show();
+
         }
 
     };

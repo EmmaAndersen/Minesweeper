@@ -85,29 +85,27 @@ public class PlayFragment extends Fragment
         @Override
         public void onClick(View v) {
 
-            CharSequence  easy = "You chose the easymode";
             Intent intent = new Intent(getActivity(),GameActivity.class);
             intent.putExtra("width",9);
             intent.putExtra("height",9);
             intent.putExtra("bombCount",1);   //Changed this to 1 for testing
             intent.putExtra("difficulityLevel",0);
+
             if(intent != null)
             {
-
                startActivity(intent);
+                getActivity().finish();
+
                 Log.d("HEJSAN1" , String.valueOf(getActivity()));
 
             }
-            //MainActivity.fragmentManager.beginTransaction().replace(R.id.container, MenuManager.getInstance().highscoreFragment , null ).commit();
 
-               //Toast.makeText(getActivity().getApplicationContext(), easy, Toast.LENGTH_SHORT).show();
         }
 
     };
     private View.OnClickListener buttonListenerIntermediate = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            CharSequence  easy = "You chose the easymode";
             Intent intent = new Intent(getActivity(),GameActivity.class);
             intent.putExtra("width",16);
             intent.putExtra("height",16);
@@ -115,21 +113,18 @@ public class PlayFragment extends Fragment
             intent.putExtra("difficulityLevel",1);
             if(intent != null)
             {
-                //v.getContext().startActivity(intent);
                 startActivity(intent);
+                getActivity().finish();
                 Log.d("HEJSAN2" , String.valueOf(getActivity()));
 
             }
-            //CharSequence  intermidate = "You chose the intermidatemode";
-
-                //Toast.makeText(getActivity().getApplicationContext(), intermidate, Toast.LENGTH_SHORT).show();
         }
 
     };
     private View.OnClickListener buttonListenerHard = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            CharSequence  easy = "You chose the easymode";
+
             Intent intent = new Intent(getActivity(),GameActivity.class);
             intent.putExtra("width",16);
             intent.putExtra("height",30);
@@ -137,10 +132,9 @@ public class PlayFragment extends Fragment
             intent.putExtra("difficulityLevel",2);
             if(intent != null)
             {
-                //v.getContext().startActivity(intent);
                 startActivity(intent);
+                getActivity().finish();
                 Log.d("HEJSAN3" , String.valueOf(getActivity()));
-
             }
         }
     };
