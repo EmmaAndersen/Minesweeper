@@ -117,9 +117,7 @@ public class Intermediate_fragment extends Fragment {
             if ((myIntegerMinute[maxValue]) == (myIntegerMinute[i])) {
 
                 if ((myIntegerSeconde[maxValue]) >= (myIntegerSeconde[i])) {
-                    Log.d("newLog", String.valueOf(myIntegerSeconde[maxValue]) + ": " + String.valueOf(myIntegerSeconde[i]));
                     maxValue = i;
-                    Log.d("compareLog", score.get(i) + "name: " + String.valueOf(maxValue));
                 }
             }
         }

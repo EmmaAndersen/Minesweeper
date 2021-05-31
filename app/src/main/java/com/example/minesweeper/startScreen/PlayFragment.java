@@ -89,7 +89,7 @@ public class PlayFragment extends Fragment
             Intent intent = new Intent(getActivity(),GameActivity.class);
             intent.putExtra("width",9);
             intent.putExtra("height",9);
-            intent.putExtra("bombCount",1);   //Changed this to 1 for testing
+            intent.putExtra("bombCount",5);   //Changed this to 1 for testing
             intent.putExtra("difficulityLevel",0);
             if(intent != null)
             {
